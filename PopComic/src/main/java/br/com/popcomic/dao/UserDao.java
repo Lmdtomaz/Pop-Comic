@@ -130,6 +130,7 @@ public class UserDao {
         }
         return null;
     }
+    //Alterar senha
     public boolean alterarSenha(int idUser, String novaSenha, String repetirSenha) throws SQLException {
         // Verifica se a nova senha tem pelo menos 8 dígitos
         if (novaSenha.length() < 8) {
