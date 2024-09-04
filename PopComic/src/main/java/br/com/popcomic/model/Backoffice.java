@@ -1,7 +1,6 @@
 package br.com.popcomic.model;
 
 import br.com.popcomic.dao.UserDao;
-import br.com.popcomic.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
@@ -35,7 +34,7 @@ public class Backoffice {
                 System.out.println("Login bem-sucedido!");
                 System.out.println("Bem-vindo, " + user.getNome());
             } else {
-                System.out.println(" << Não foi possível identificar o usuário, tente novamente! >> ");
+                System.out.println("<< Não foi possível identificar o usuário, tente novamente! >>");
             }
         }
 
@@ -125,10 +124,9 @@ public class Backoffice {
                 System.out.println("Escolha o campo que deseja atualizar:");
                 System.out.println("1. Nome");
                 System.out.println("2. CPF");
-                System.out.println("3. Email");
-                System.out.println("4. Status");
-                System.out.println("5. Grupo");
-                System.out.println("6. Senha");
+                System.out.println("3. Status");
+                System.out.println("4. Grupo");
+                System.out.println("5. Senha");
                 System.out.print("Digite o número da opção: ");
                 int opcao = scanner.nextInt();
                 scanner.nextLine(); // Consumir o newline após o int
@@ -138,40 +136,33 @@ public class Backoffice {
                 switch (opcao) {
                     case 1:
                         System.out.print("Digite o novo nome: ");
-                        user.setNome(scanner.nextLine());
-                        atualizado = userDao.UpdateUser(user);
+                        String novoNome = scanner.nextLine();
+                        atualizado = userDao.alterarNome(idUser, novoNome);
                         break;
                     case 2:
                         System.out.print("Digite o novo CPF: ");
-                        user.setCpf(scanner.nextLine());
-                        atualizado = userDao.UpdateUser(user);
+                        String novoCpf = scanner.nextLine();
+                        atualizado = userDao.alterarCpf(idUser, novoCpf);
                         break;
                     case 3:
-                        System.out.print("Digite o novo email: ");
-                        user.setEmail(scanner.nextLine());
-                        atualizado = userDao.UpdateUser(user);
-                        break;
-                    case 4:
                         System.out.print("Deseja " + (user.isStatus() ? "desativar" : "ativar") + " o usuário? (Y/N): ");
                         String escolha = scanner.nextLine();
                         if ("Y".equalsIgnoreCase(escolha)) {
                             user.setStatus(!user.isStatus());
-                            atualizado = userDao.StatusUsuario(user.getIdUser(), user.isStatus());
+                            atualizado = userDao.StatusUsuario(idUser, user.isStatus());
                         }
                         break;
-                    case 5:
-                        System.out.print("Digite o novo grupo (Administrador ou Estoquista): ");
-                        user.setGrupo(scanner.nextLine());
-                        atualizado = userDao.UpdateUser(user);
+                    case 4:
+                        System.out.print("Digite o novo grupo (administrador ou estoquista): ");
+                        String novoGrupo = scanner.nextLine();
+                        atualizado = userDao.alterarGrupo(idUser, novoGrupo);
                         break;
-                    case 6:
+                    case 5:
                         System.out.print("Digite a nova senha: ");
-                        String senha = scanner.nextLine();
-                        // Criptografar a senha antes de atualizar
-                        String hashedSenha = BCrypt.hashpw(senha, BCrypt.gensalt());
-                        user.setSenha(hashedSenha);
-                        user.setRepetirSenha(hashedSenha); // Atualiza a repetição da senha
-                        atualizado = userDao.UpdateUser(user);
+                        String novaSenha = scanner.nextLine();
+                        System.out.print("Repita a nova senha: ");
+                        String repetirSenha = scanner.nextLine();
+                        atualizado = userDao.alterarSenha(idUser, novaSenha, repetirSenha);
                         break;
                     default:
                         System.out.println("Opção inválida.");
@@ -189,7 +180,8 @@ public class Backoffice {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            System.out.println("Erro: " + e.getMessage());
         }
     }
-
 }

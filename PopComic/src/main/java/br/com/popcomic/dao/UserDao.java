@@ -130,8 +130,94 @@ public class UserDao {
         }
         return null;
     }
+    public boolean alterarSenha(int idUser, String novaSenha, String repetirSenha) throws SQLException {
+        // Verifica se a nova senha tem pelo menos 8 dígitos
+        if (novaSenha.length() < 8) {
+            throw new IllegalArgumentException("A senha deve ter no mínimo 8 caracteres.");
+        }
+
+        // Verifica se a nova senha e a senha repetida são iguais
+        if (!novaSenha.equals(repetirSenha)) {
+            throw new IllegalArgumentException("As senhas não coincidem.");
+        }
+
+        // Criptografar a nova senha
+        String hashedSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
+
+        String sql = "UPDATE users SET SENHA = ? WHERE IDUSERS = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, hashedSenha);
+            stmt.setInt(2, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean alterarCpf(int idUser, String novoCpf) throws SQLException {
+        // Verifica se o CPF tem exatamente 11 dígitos
+        if (novoCpf.length() != 11) {
+            throw new IllegalArgumentException("O CPF deve ter exatamente 11 dígitos.");
+        }
+
+        String sql = "UPDATE users SET CPF = ? WHERE IDUSERS = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, novoCpf);
+            stmt.setInt(2, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean alterarNome(int idUser, String novoNome) throws SQLException {
+        // Verifica se o novo nome não está vazio ou nulo
+        if (novoNome == null || novoNome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode estar vazio.");
+        }
+
+        String sql = "UPDATE users SET NOME = ? WHERE IDUSERS = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, novoNome);
+            stmt.setInt(2, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean alterarGrupo(int idUser, String novoGrupo) throws SQLException {
+        // Verifica se o novo grupo é "administrador" ou "estoquista"
+        if (!novoGrupo.equalsIgnoreCase("administrador") && !novoGrupo.equalsIgnoreCase("estoquista")) {
+            throw new IllegalArgumentException("O grupo deve ser 'administrador' ou 'estoquista'.");
+        }
+
+        String sql = "UPDATE users SET GRUPO = ? WHERE IDUSERS = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, novoGrupo);
+            stmt.setInt(2, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 }
+
 
 
 
