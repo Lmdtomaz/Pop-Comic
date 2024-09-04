@@ -6,6 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 public class UserDao {
@@ -16,25 +17,29 @@ public class UserDao {
         try {
             this.connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException("Failed to connect to the database", e);
         }
     }
 
-    public boolean registerUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    public boolean registerUser(User user) {
+        var sql = """
+            INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+        Objects.requireNonNull(user, "User cannot be null");
+
+        try (var stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, user.getNome());
             stmt.setString(2, user.getCpf());
             stmt.setString(3, user.getEmail());
             stmt.setBoolean(4, user.isStatus());
             stmt.setString(5, user.getGrupo());
-            // Criptografar a senha antes de armazenar
-            String hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
+            var hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
             stmt.setString(6, hashedSenha);
-            stmt.setString(7, hashedSenha); // Se você estiver armazenando repetirSenha, faça o mesmo
-
-            int rowsAffected = stmt.executeUpdate();
+            stmt.setString(7, hashedSenha);
+            var rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
