@@ -4,6 +4,9 @@ import br.com.popcomic.model.User;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class UserDao {
 
@@ -17,27 +20,29 @@ public class UserDao {
         }
     }
 
-    public boolean registerUser(User user) throws SQLException {
-        String sql = "INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getNome());
-            stmt.setString(2, user.getCpf());
-            stmt.setString(3, user.getEmail());
-            stmt.setBoolean(4, user.isStatus());
-            stmt.setString(5, user.getGrupo());
-            // Criptografar a senha antes de armazenar
-            String hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
-            stmt.setString(6, hashedSenha);
-            stmt.setString(7, hashedSenha); // Se você estiver armazenando repetirSenha, faça o mesmo
 
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+//    public boolean registerUser(User user) throws SQLException {
+//        String sql = "INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) VALUES (?, ?, ?, ?, ?, ?, ?)";
+//
+//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+//            stmt.setString(1, user.getNome());
+//            stmt.setString(2, user.getCpf());
+//            stmt.setString(3, user.getEmail());
+//            stmt.setBoolean(4, user.isStatus());
+//            stmt.setString(5, user.getGrupo());
+//            // Criptografar a senha antes de armazenar
+//            String hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
+//            stmt.setString(6, hashedSenha);
+//            stmt.setString(7, hashedSenha); // Se você estiver armazenando repetirSenha, faça o mesmo
+//
+//            int rowsAffected = stmt.executeUpdate();
+//            return rowsAffected > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
 
 
     public boolean UpdateUser(User user) throws SQLException {///ALTERAR
@@ -210,6 +215,58 @@ public class UserDao {
             stmt.setInt(2, idUser);
 
             int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public List<User> listUser() throws SQLException{
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM users";
+
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                User user = new User(
+                        rs.getInt("idUser"),
+                        rs.getString("nome"),
+                        rs.getString("cpf"),
+                        rs.getString("email"),
+                        rs.getBoolean("status"),
+                        rs.getString("grupo"),
+                        rs.getString("senha"),
+                        rs.getString("repetirSenha")
+                );
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public boolean registerUser(User user) {
+        var sql = """
+            INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+
+
+        Objects.requireNonNull(user, "User cannot be null");
+
+        try (var stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, user.getNome());
+            stmt.setString(2, user.getCpf());
+            stmt.setString(3, user.getEmail());
+            stmt.setBoolean(4, user.isStatus());
+            stmt.setString(5, user.getGrupo());
+            var hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
+            stmt.setString(6, hashedSenha);
+            stmt.setString(7, hashedSenha);
+            var rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
