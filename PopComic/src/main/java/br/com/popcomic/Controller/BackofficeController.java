@@ -94,7 +94,7 @@ public class BackofficeController {
 
             switch (opcao) {
 
-                case "1":
+                case "1": //Alterar usuario
                     System.out.println("Digite o novo Nome");
                     String novoNome = scanner.nextLine();
                     System.out.println("Novo CPf:");
@@ -119,9 +119,16 @@ public class BackofficeController {
                     break;
 
                 case "3": // Ativar/Desativar usuário
-                    boolean novoStatus = !user.isStatus();
-                    userDao.StatusUsuario(user.getIdUser(), novoStatus);
-                    System.out.println("Usuário " + (novoStatus ? "ativado" : "desativado") + " com sucesso!");
+
+                    boolean novoStatus = !user.isStatus(); // Se estiver ativo, desativa, e vice-versa
+
+                    boolean sucesso = userDao.StatusUsuario(user.getIdUser(), novoStatus);
+                    if (sucesso) {
+                        System.out.println("Usuário " + (novoStatus ? "ativado" : "desativado") + " com sucesso!");
+                        user.setStatus(novoStatus);
+                    } else {
+                        System.out.println("Erro ao alterar o status do usuário.");
+                    }
                     break;
 
                 case "4": // Voltar para a listagem de usuários
@@ -130,7 +137,7 @@ public class BackofficeController {
 
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
-                    break;
+                break;
             }
         }
     }
