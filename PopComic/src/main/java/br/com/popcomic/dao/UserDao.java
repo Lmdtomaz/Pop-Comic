@@ -80,7 +80,7 @@ public class UserDao {
         }
     }
 
-    public User getUserById(int idUser) throws SQLException {
+    public User findUserById(int idUser) throws SQLException {
         String sql = "SELECT * FROM users WHERE idUser = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -98,12 +98,15 @@ public class UserDao {
                             rs.getString("senha"),
                             rs.getString("repetirSenha")
                     );
+                } else {
+                    System.out.println("Usuário com ID " + idUser + " não encontrado.");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e; // Repassa a exceção para que possa ser tratada mais acima, se necessário
         }
-        return null;
+        return null; // Se nenhum usuário for encontrado
     }
 
 
@@ -137,10 +140,7 @@ public class UserDao {
     }
     //Alterar senha
     public boolean alterarSenha(int idUser, String novaSenha, String repetirSenha) throws SQLException {
-        // Verifica se a nova senha tem pelo menos 8 dígitos
-        if (novaSenha.length() < 8) {
-            throw new IllegalArgumentException("A senha deve ter no mínimo 8 caracteres.");
-        }
+
 
         // Verifica se a nova senha e a senha repetida são iguais
         if (!novaSenha.equals(repetirSenha)) {
@@ -150,7 +150,7 @@ public class UserDao {
         // Criptografar a nova senha
         String hashedSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
 
-        String sql = "UPDATE users SET SENHA = ? WHERE IDUSERS = ?";
+        String sql = "UPDATE users SET SENHA = ? WHERE IDUSER = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, hashedSenha);
@@ -164,55 +164,29 @@ public class UserDao {
         }
     }
 
-    public boolean alterarCpf(int idUser, String novoCpf) throws SQLException {
-        // Verifica se o CPF tem exatamente 11 dígitos
-        if (novoCpf.length() != 11) {
-            throw new IllegalArgumentException("O CPF deve ter exatamente 11 dígitos.");
-        }
-
-        String sql = "UPDATE users SET CPF = ? WHERE IDUSERS = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, novoCpf);
-            stmt.setInt(2, idUser);
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-    public boolean alterarNome(int idUser, String novoNome) throws SQLException {
+    public boolean AlterarUsuario(int idUser, String novoNome, String novoCpf, String novoGrupo) throws SQLException {
         // Verifica se o novo nome não está vazio ou nulo
         if (novoNome == null || novoNome.trim().isEmpty()) {
             throw new IllegalArgumentException("O nome não pode estar vazio.");
         }
 
-        String sql = "UPDATE users SET NOME = ? WHERE IDUSERS = ?";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, novoNome);
-            stmt.setInt(2, idUser);
-
-            int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+        // Verifica se o novo CPF tem exatamente 11 dígitos
+        if (novoCpf.length() != 11) {
+            throw new IllegalArgumentException("O CPF deve ter exatamente 11 dígitos.");
         }
-    }
-    public boolean alterarGrupo(int idUser, String novoGrupo) throws SQLException {
+
         // Verifica se o novo grupo é "administrador" ou "estoquista"
         if (!novoGrupo.equalsIgnoreCase("administrador") && !novoGrupo.equalsIgnoreCase("estoquista")) {
             throw new IllegalArgumentException("O grupo deve ser 'administrador' ou 'estoquista'.");
         }
 
-        String sql = "UPDATE users SET GRUPO = ? WHERE IDUSERS = ?";
+        String sql = "UPDATE users SET NOME = ?, CPF = ?, GRUPO = ? WHERE IDUSER = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, novoGrupo);
-            stmt.setInt(2, idUser);
+            stmt.setString(1, novoNome);
+            stmt.setString(2, novoCpf);
+            stmt.setString(3, novoGrupo);
+            stmt.setInt(4, idUser);
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -248,7 +222,7 @@ public class UserDao {
         return users;
     }
 
-    public boolean registerUser(User user) {
+    public boolean incluirUsuario(User user) {
         var sql = """
             INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) 
             VALUES (?, ?, ?, ?, ?, ?, ?)

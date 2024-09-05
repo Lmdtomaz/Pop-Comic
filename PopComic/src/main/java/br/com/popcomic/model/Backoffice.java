@@ -1,187 +1,119 @@
 package br.com.popcomic.model;
 
+import br.com.popcomic.Controller.BackofficeController;
 import br.com.popcomic.dao.UserDao;
 import org.mindrot.jbcrypt.BCrypt;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 public class Backoffice {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-        String url = "jdbc:h2:~/test";
-        String usuario = "sa";
-        String password = "sa";
         Scanner scanner = new Scanner(System.in);
 
         // Login
         UserDao userDao = new UserDao(); // Instanciar UserDao uma vez aqui
-        User user = null;
+        BackofficeController backofficeController = new BackofficeController(userDao);
 
-        while (user == null) {
-            System.out.print("Usuário (e-mail): ");
+
+        while (true) {
+
+            System.out.print("Usuário: ");
             String email = scanner.nextLine();
 
             System.out.print("Senha: ");
             String senha = scanner.nextLine();
 
-            user = userDao.ValidarLogin(email, senha);
+            userDao.ValidarLogin(email, senha);
+            User user = new User();
 
-            if (user != null) {
+            if (userDao != null) {
                 System.out.println("Login bem-sucedido!");
-                System.out.println("Bem-vindo, " + user.getNome());
+                System.out.println("Bem-vindo, " + user.getNome() + "!");
+                break;
             } else {
-                System.out.println("<< Não foi possível identificar o usuário, tente novamente! >>");
+                System.out.println(" << Não foi possivel identificar o usuário, tente novamente! >> ");
             }
+
         }
 
         // Menu de operações após login
+
+        //<<<<<<<<<<<<Logica>>>>>>>>>>>>>>
+
         while (true) {
             System.out.println("--------------- Área Backoffice ------------");
             System.out.println("1- Listar Produtos");
-            System.out.println("2- Listar Usuário");
+            System.out.println("2- Listar Usuários");
             System.out.print("Escolha (1 ou 2) -> ");
-            int vlr1 = scanner.nextInt();
+            int opc = scanner.nextInt();
             scanner.nextLine(); // Consumir o newline após o int
 
-            switch (vlr1) {
+            switch (opc) {
                 case 1:
-                    // Implementar a lógica para listar produtos
-                    break;
+                    // Inserir metodo para listar produtos.
+                break;
+
                 case 2:
-                    listarUsuarios(userDao, scanner);
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-            }
-        }
-    }
+                    while (true) { // Loop para permitir retornar à listagem de usuários
+                        try {
+                            // Listar os usuários
+                            List<User> users = userDao.listUser();
+                            if (users.isEmpty()) {
+                                System.out.println("Nenhum usuário encontrado.");
+                            } else {
+                                System.out.println("ID | Nome | CPF | Email | Status | Grupo");
+                                System.out.println("------------------------------------------");
+                                for (User user : users) {
+                                    String status = user.isStatus() ? "Ativo" : "Inativo";
+                                    System.out.printf("%d | %s | %s | %s | %s | %s\n", user.getIdUser(), user.getNome(), user.getCpf(), user.getEmail(), status, user.getGrupo());
+                                }
+                            }
 
-    private static void listarUsuarios(UserDao userDao, Scanner scanner) {
-        String url = "jdbc:h2:~/test";
-        String usuario = "sa";
-        String password = "sa";
+                            // Apresentar as opções após a listagem
+                            System.out.print("\nEntre com o ID para editar/ativar/inativar, 0 para voltar ou 'i' para incluir um novo usuário: ");
+                            String input = scanner.nextLine();
 
-        try (Connection connection = DriverManager.getConnection(url, usuario, password);
-             java.sql.Statement stmt = connection.createStatement()) {
+                            //inclui um nobo usuario
+                            if (input.equals("i")) {
+                                backofficeController.incluirUsuario();
 
-            String sql = "SELECT * FROM users";
-            java.sql.ResultSet rs = stmt.executeQuery(sql);
+                                //volta para o menu principal
+                            } else {
+                                if (input.equals("0")) {
 
-            while (rs.next()) {
-                int idUser = rs.getInt("IDUSER");
-                String nome = rs.getString("NOME");
-                String cpf = rs.getString("CPF");
-                String email = rs.getString("EMAIL");
-                boolean status = rs.getBoolean("STATUS");
-                String grupo = rs.getString("GRUPO");
+                                    break;  // Sai do loop de listagem e volta para o menu principal
 
-                System.out.println(" |ID: " + idUser + ", | Nome: | " + nome + "| CPF: |" + cpf +
-                        "| Email: |" + email + "| Status: " + (status ? "Ativo" : "Inativo") +
-                        "| Grupo " + grupo);
-            }
+                                    //edita o usuario
+                                } else {
+                                    try {
+                                        int id = Integer.parseInt(input);
+                                        User user = userDao.findUserById(id);
 
-            System.out.println();
-            System.out.println("------- O que deseja fazer? --------");
-            System.out.println("1 - Editar (Editar/Ativar/Inativar)");
-            System.out.println("2 - Excluir");
-            System.out.println("3 - Incluir");
-            System.out.print("Escolha (1, 2 ou 3) -> ");
-            int vlr2 = scanner.nextInt();
-            scanner.nextLine(); // Consumir o newline após o int
-
-            switch (vlr2) {
-                case 1:
-                    editarUsuario(userDao, scanner);
-                    break;
-                case 2:
-                    // Implementar a lógica para excluir um usuário se necessário
-                    break;
-                case 3:
-                    // Implementar a lógica para incluir um usuário se necessário
-                    break;
-                default:
-                    System.out.println("Opção inválida.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void editarUsuario(UserDao userDao, Scanner scanner) {
-        try {
-            System.out.print("Digite o ID do usuário que deseja atualizar: ");
-            int idUser = scanner.nextInt();
-            scanner.nextLine(); // Consumir o newline após o int
-
-            User user = userDao.getUserById(idUser);
-
-            if (user != null) {
-                System.out.println("Escolha o campo que deseja atualizar:");
-                System.out.println("1. Nome");
-                System.out.println("2. CPF");
-                System.out.println("3. Status");
-                System.out.println("4. Grupo");
-                System.out.println("5. Senha");
-                System.out.print("Digite o número da opção: ");
-                int opcao = scanner.nextInt();
-                scanner.nextLine(); // Consumir o newline após o int
-
-                boolean atualizado = false;
-
-                switch (opcao) {
-                    case 1:
-                        System.out.print("Digite o novo nome: ");
-                        String novoNome = scanner.nextLine();
-                        atualizado = userDao.alterarNome(idUser, novoNome);
-                        break;
-                    case 2:
-                        System.out.print("Digite o novo CPF: ");
-                        String novoCpf = scanner.nextLine();
-                        atualizado = userDao.alterarCpf(idUser, novoCpf);
-                        break;
-                    case 3:
-                        System.out.print("Deseja " + (user.isStatus() ? "desativar" : "ativar") + " o usuário? (Y/N): ");
-                        String escolha = scanner.nextLine();
-                        if ("Y".equalsIgnoreCase(escolha)) {
-                            user.setStatus(!user.isStatus());
-                            atualizado = userDao.StatusUsuario(idUser, user.isStatus());
+                                        if (user != null) {
+                                            backofficeController.editarUsuario(user);
+                                        } else {
+                                            System.out.println("Usuario com id:" + id + "nao encontrado");
+                                        }
+                                    } catch (NumberFormatException e) {
+                                        System.out.println("ID inválido. Por favor, insira um número válido.");
+                                    }
+                                }
+                            }
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao listar usuários: " + e.getMessage());
                         }
-                        break;
-                    case 4:
-                        System.out.print("Digite o novo grupo (administrador ou estoquista): ");
-                        String novoGrupo = scanner.nextLine();
-                        atualizado = userDao.alterarGrupo(idUser, novoGrupo);
-                        break;
-                    case 5:
-                        System.out.print("Digite a nova senha: ");
-                        String novaSenha = scanner.nextLine();
-                        System.out.print("Repita a nova senha: ");
-                        String repetirSenha = scanner.nextLine();
-                        atualizado = userDao.alterarSenha(idUser, novaSenha, repetirSenha);
-                        break;
-                    default:
-                        System.out.println("Opção inválida.");
-                }
-
-                if (atualizado) {
-                    System.out.println("Usuário atualizado com sucesso!");
-                } else {
-                    System.out.println("Erro ao atualizar usuário.");
-                }
-
-            } else {
-                System.out.println("Usuário não encontrado.");
+                    }
+                break;
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            System.out.println("Erro: " + e.getMessage());
         }
     }
+
 }
+
+
