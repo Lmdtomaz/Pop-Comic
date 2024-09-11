@@ -1,9 +1,6 @@
 package br.com.popcomic.model;
 
-public class
-
-
-User {
+public class User {
 
         private int idUser;
         private String nome;
@@ -17,7 +14,17 @@ User {
         public User() {
         }
 
-        public User(int idUser, String nome, String cpf, String email, boolean status, String grupo, String senha, String repetirSenha) {
+    public User(String nome, String cpf, String email, boolean status, String grupo, String senha, String repetirSenha) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.email = email;
+        this.status = status;
+        this.grupo = grupo;
+        this.senha = senha;
+        this.repetirSenha = repetirSenha;
+    }
+
+    public User(int idUser, String nome, String cpf, String email, boolean status, String grupo, String senha, String repetirSenha) {
             this.idUser = idUser;
             this.nome = nome;
             this.cpf = cpf;

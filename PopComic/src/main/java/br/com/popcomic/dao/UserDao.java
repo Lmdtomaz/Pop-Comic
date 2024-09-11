@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class UserDao {
 
     private Connection connection;
@@ -17,35 +16,10 @@ public class UserDao {
         try {
             this.connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
         } catch (SQLException e) {
-            throw new RuntimeException("Failed to connect to the database", e);
-        }
-    }
-
-    public boolean registerUser(User user) {
-        var sql = """
-            INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) 
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            """;
-
-
-        Objects.requireNonNull(user, "User cannot be null");
-
-        try (var stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, user.getNome());
-            stmt.setString(2, user.getCpf());
-            stmt.setString(3, user.getEmail());
-            stmt.setBoolean(4, user.isStatus());
-            stmt.setString(5, user.getGrupo());
-            var hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
-            stmt.setString(6, hashedSenha);
-            stmt.setString(7, hashedSenha);
-            var rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
-        } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         }
     }
+
 
 
     public boolean UpdateUser(User user) throws SQLException {///ALTERAR
@@ -83,7 +57,7 @@ public class UserDao {
         }
     }
 
-    public User getUserById(int idUser) throws SQLException {
+    public User findUserById(int idUser) throws SQLException {
         String sql = "SELECT * FROM users WHERE idUser = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
@@ -101,12 +75,15 @@ public class UserDao {
                             rs.getString("senha"),
                             rs.getString("repetirSenha")
                     );
+                } else {
+                    System.out.println("Usuário com ID " + idUser + " não encontrado.");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            throw e; // Repassa a exceção para que possa ser tratada mais acima, se necessário
         }
-        return null;
+        return null; // Se nenhum usuário for encontrado
     }
 
 
@@ -138,6 +115,63 @@ public class UserDao {
         }
         return null;
     }
+    //Alterar senha
+    public boolean alterarSenha(int idUser, String novaSenha, String repetirSenha) throws SQLException {
+
+
+        // Verifica se a nova senha e a senha repetida são iguais
+        if (!novaSenha.equals(repetirSenha)) {
+            throw new IllegalArgumentException("As senhas não coincidem.");
+        }
+
+        // Criptografar a nova senha
+        String hashedSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
+
+        String sql = "UPDATE users SET SENHA = ? WHERE IDUSER = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, hashedSenha);
+            stmt.setInt(2, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean AlterarUsuario(int idUser, String novoNome, String novoCpf, String novoGrupo) throws SQLException {
+        // Verifica se o novo nome não está vazio ou nulo
+        if (novoNome == null || novoNome.trim().isEmpty()) {
+            throw new IllegalArgumentException("O nome não pode estar vazio.");
+        }
+
+        // Verifica se o novo CPF tem exatamente 11 dígitos
+        if (novoCpf.length() != 11) {
+            throw new IllegalArgumentException("O CPF deve ter exatamente 11 dígitos.");
+        }
+
+        // Verifica se o novo grupo é "administrador" ou "estoquista"
+        if (!novoGrupo.equalsIgnoreCase("administrador") && !novoGrupo.equalsIgnoreCase("estoquista")) {
+            throw new IllegalArgumentException("O grupo deve ser 'administrador' ou 'estoquista'.");
+        }
+
+        String sql = "UPDATE users SET NOME = ?, CPF = ?, GRUPO = ? WHERE IDUSER = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, novoNome);
+            stmt.setString(2, novoCpf);
+            stmt.setString(3, novoGrupo);
+            stmt.setInt(4, idUser);
+
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public List<User> listUser() throws SQLException{
         List<User> users = new ArrayList<>();
@@ -165,7 +199,34 @@ public class UserDao {
         return users;
     }
 
+    public boolean incluirUsuario(User user) {
+        var sql = """
+            INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) 
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """;
+
+
+        Objects.requireNonNull(user, "User cannot be null");
+
+        try (var stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, user.getNome());
+            stmt.setString(2, user.getCpf());
+            stmt.setString(3, user.getEmail());
+            stmt.setBoolean(4, user.isStatus());
+            stmt.setString(5, user.getGrupo());
+            var hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
+            stmt.setString(6, hashedSenha);
+            stmt.setString(7, hashedSenha);
+            var rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
+
 
 
 
