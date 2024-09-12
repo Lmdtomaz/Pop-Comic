@@ -22,29 +22,6 @@ public class UserDao {
 
 
 
-//    public boolean registerUser(User user) throws SQLException {
-//        String sql = "INSERT INTO users (nome, cpf, email, status, grupo, senha, repetirSenha) VALUES (?, ?, ?, ?, ?, ?, ?)";
-//
-//        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-//            stmt.setString(1, user.getNome());
-//            stmt.setString(2, user.getCpf());
-//            stmt.setString(3, user.getEmail());
-//            stmt.setBoolean(4, user.isStatus());
-//            stmt.setString(5, user.getGrupo());
-//            // Criptografar a senha antes de armazenar
-//            String hashedSenha = BCrypt.hashpw(user.getSenha(), BCrypt.gensalt());
-//            stmt.setString(6, hashedSenha);
-//            stmt.setString(7, hashedSenha); // Se você estiver armazenando repetirSenha, faça o mesmo
-//
-//            int rowsAffected = stmt.executeUpdate();
-//            return rowsAffected > 0;
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
-
-
     public boolean UpdateUser(User user) throws SQLException {///ALTERAR
         String sql = "UPDATE users SET nome = ?, cpf = ?, email = ?, status = ?, grupo = ?, senha = ? WHERE idUser = ?";
 

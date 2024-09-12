@@ -1,9 +1,6 @@
 package br.com.popcomic.model;
 
-public class
-
-
-User {
+public class User {
 
         private int idUser;
         private String nome;
