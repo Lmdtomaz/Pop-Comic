@@ -2,10 +2,7 @@ package br.com.popcomic.dao;
 
 import br.com.popcomic.model.Produto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +11,13 @@ public class ProdutoDao {
     private Connection connection;
 
 
-    public ProdutoDao(Connection connection) {
-        this.connection = connection;
+
+    public ProdutoDao() {
+        try {
+            this.connection = DriverManager.getConnection("jdbc:h2:~/test", "sa", "sa");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -93,4 +95,62 @@ public class ProdutoDao {
         }
         return produtos;
     }
+
+    public Produto findProdutoById(int idProduto) throws SQLException {
+        String sql = "SELECT * FROM produtos WHERE id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idProduto);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Retorna um novo objeto Produto com os dados da linha encontrada
+                    return new Produto(
+                            rs.getString("nome"),
+                            rs.getDouble("avaliacao"),
+                            rs.getString("descricaoDetalhada"),
+                            rs.getDouble("precoProduto"),
+                            rs.getInt("qtdEstoque"),
+                            new ArrayList<>(),  // Inicializa a lista de imagens vazia
+                            null  // Imagem padrão será adicionada separadamente
+                    );
+                } else {
+                    System.out.println("Produto com ID " + idProduto + " não encontrado.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e; // Repassa a exceção para tratamento superior
+        }
+        return null; // Retorna null se nenhum produto for encontrado
+    }
+
+
+    public void alterarProduto(Produto produto) throws SQLException {
+        String atualizarProdutoSQL = "UPDATE produtos SET nome = ?, avaliacao = ?, descricaoDetalhada = ?, precoProduto = ?, qtdEstoque = ? WHERE id = ?";
+        String atualizarImagemSQL = "UPDATE imagens SET caminhoImagem = ?, imagemPadrao = ? WHERE produto_id = ? AND caminhoImagem = ?";
+
+        try (PreparedStatement psProduto = connection.prepareStatement(atualizarProdutoSQL)) {
+            // Atualizar dados do produto
+            psProduto.setString(1, produto.getNome());
+            psProduto.setDouble(2, produto.getAvaliacao());
+            psProduto.setString(3, produto.getDescricaoDetalhada());
+            psProduto.setDouble(4, produto.getPrecoProduto());
+            psProduto.setInt(5, produto.getQtdEstoque());
+            psProduto.executeUpdate();
+
+            // Atualizar imagens associadas ao produto
+            for (String imagem : produto.getImagens()) {
+                try (PreparedStatement psImagem = connection.prepareStatement(atualizarImagemSQL)) {
+                    psImagem.setString(1, imagem);
+                    psImagem.setBoolean(2, imagem.equals(produto.getImagemPadrao()));
+                    psImagem.setString(3, imagem);  // Referenciar a imagem pelo caminho original
+                    psImagem.executeUpdate();
+                }
+            }
+
+            System.out.println("Produto atualizado com sucesso!");
+        }
+    }
+
 }

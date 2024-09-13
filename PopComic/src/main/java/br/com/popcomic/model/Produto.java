@@ -1,8 +1,11 @@
 package br.com.popcomic.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Produto {
+
+    private int id;
 
     private String nome;
     private double avaliacao;
@@ -12,8 +15,19 @@ public class Produto {
     private List<String> imagens;
     private String imagemPadrao;
 
+    public Produto(String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, ArrayList<Object> objects, Object imagens) {
+    }
 
-    public Produto(String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, List<String> imagens, String imagemPadrao) {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Produto(int id , String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, List<String> imagens, String imagemPadrao) {
+        this.id = id;
         this.nome = nome;
         this.avaliacao = avaliacao;
         this.descricaoDetalhada = descricaoDetalhada;
