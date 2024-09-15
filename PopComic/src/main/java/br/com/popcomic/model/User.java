@@ -1,9 +1,11 @@
 package br.com.popcomic.model;
 
+import br.com.popcomic.dao.UserDao;
+
 public class
 
 
-User {
+User  {
 
         private int idUser;
         private String nome;
@@ -16,6 +18,7 @@ User {
 
         public User() {
         }
+
 
     public User(String nome, String cpf, String email, boolean status, String grupo, String senha, String repetirSenha) {
         this.nome = nome;
