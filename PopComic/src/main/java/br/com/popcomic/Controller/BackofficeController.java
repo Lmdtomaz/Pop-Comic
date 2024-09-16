@@ -31,6 +31,12 @@ public class BackofficeController {
             System.out.print("Cpf => ");
             String cpf = scanner.nextLine();
 
+            // Validação do CPF
+            if (!CPFUtils.validarCPF(cpf)) {
+                System.out.println("CPF inválido. Tente novamente.");
+                return;
+            }
+
             System.out.print("E-mail => ");
             String email = scanner.nextLine();
 
@@ -56,7 +62,7 @@ public class BackofficeController {
 
             if (confirmacao.equalsIgnoreCase("Y")) {
                 // Criar o objeto User
-                User user = new User( nome, cpf, email, true, grupo, senha, repetirSenha);
+                User user = new User(nome, cpf, email, true, grupo, senha, repetirSenha);
 
                 // Registrar o usuário no banco de dados usando incluirUsuario()
                 boolean sucesso = userDao.incluirUsuario(user);
@@ -97,11 +103,18 @@ public class BackofficeController {
                 case "1": //Alterar usuario
                     System.out.println("Digite o novo Nome");
                     String novoNome = scanner.nextLine();
-                    System.out.println("Novo CPf:");
+                    System.out.println("Novo CPF:");
                     String novoCPF = scanner.nextLine();
+
+                    // Validação do CPF
+                    if (!CPFUtils.validarCPF(novoCPF)) {
+                        System.out.println("CPF inválido. Tente novamente.");
+                        break;
+                    }
+
                     System.out.println("Novo Grupo");
                     String novoGrupo = scanner.nextLine();
-                    boolean nomeAltarado = userDao.AlterarUsuario(user.getIdUser(), novoNome, novoCPF, novoGrupo);
+                    boolean nomeAlterado = userDao.AlterarUsuario(user.getIdUser(), novoNome, novoCPF, novoGrupo);
                     break;
 
 
@@ -141,6 +154,52 @@ public class BackofficeController {
             }
         }
     }
+    public class CPFUtils {
+        public static boolean validarCPF(String cpf) {
+            // Remove qualquer máscara do CPF (pontuação e espaços)
+            cpf = cpf.replaceAll("\\D", "");
+
+            // Verifica se o CPF tem 11 dígitos
+            if (cpf.length() != 11) {
+                return false;
+            }
+
+            // Verifica se todos os dígitos são iguais, o que invalida o CPF
+            if (cpf.matches("(\\d)\\1{10}")) {
+                return false;
+            }
+
+            // Cálculo do primeiro dígito verificador
+            int soma = 0;
+            for (int i = 0; i < 9; i++) {
+                soma += Character.getNumericValue(cpf.charAt(i)) * (10 - i);
+            }
+            int primeiroDigitoVerificador = 11 - (soma % 11);
+            if (primeiroDigitoVerificador >= 10) {
+                primeiroDigitoVerificador = 0;
+            }
+
+            // Verifica o primeiro dígito verificador
+            if (primeiroDigitoVerificador != Character.getNumericValue(cpf.charAt(9))) {
+                return false;
+            }
+
+            // Cálculo do segundo dígito verificador
+            soma = 0;
+            for (int i = 0; i < 10; i++) {
+                soma += Character.getNumericValue(cpf.charAt(i)) * (11 - i);
+            }
+            int segundoDigitoVerificador = 11 - (soma % 11);
+            if ( segundoDigitoVerificador >= 10) {
+                segundoDigitoVerificador = 0;
+            }
+
+            // Verifica o segundo dígito verificador
+            return segundoDigitoVerificador == Character.getNumericValue(cpf.charAt(10));
+        }
+    }
+
+
 }
 
 
