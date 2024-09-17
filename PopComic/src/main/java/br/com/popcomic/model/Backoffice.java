@@ -1,6 +1,7 @@
 package br.com.popcomic.model;
 
 import br.com.popcomic.Controller.BackofficeController;
+import br.com.popcomic.dao.ProdutoDao;
 import br.com.popcomic.dao.UserDao;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -112,7 +113,12 @@ public class Backoffice {
                 break;
             }
         }
+
+        //Produto
+
+
     }
+    ProdutoDao produtoDao = new ProdutoDao();
 
 }
 
