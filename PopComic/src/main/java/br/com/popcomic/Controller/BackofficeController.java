@@ -19,7 +19,6 @@ public class BackofficeController {
 
 
 
-
         // Metodo de inclusão de usuário
         public void incluirUsuario() {
             System.out.println("----- Inclusão de Novo Usuário -----");
@@ -114,7 +113,13 @@ public class BackofficeController {
 
                     System.out.println("Novo Grupo");
                     String novoGrupo = scanner.nextLine();
+
                     boolean nomeAlterado = userDao.AlterarUsuario(user.getIdUser(), novoNome, novoCPF, novoGrupo);
+                    if(nomeAlterado){
+                        System.out.println("Usúario alterado com sucesso!!");
+                    }else{
+                        System.out.println("Erro ao alterar o usúario!!");
+                    }
                     break;
 
 

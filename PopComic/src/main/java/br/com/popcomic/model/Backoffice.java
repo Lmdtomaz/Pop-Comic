@@ -55,10 +55,54 @@ public class Backoffice {
 
             switch (opc) {
                 case 1:
-                    // Lógica para listar produtos
-                    System.out.println("Listando produtos...");
+                    while (true){
+                        try{
+                            //Listar os produto
+                            List<Produto> produtos = new ProdutoDao().listarProdutos();
+                            if (produtos.isEmpty()) {
+                                System.out.println("Nenhum produto encontrado.");
+                            } else {
+                                System.out.println("ID | Nome | Quantidade | Valor | Status");
+                                System.out.println("------------------------------------------");
+                                for (Produto produtoItem : produtos) {
+                                    String status = produtoItem.isStatus() ? "Disponível" : "Indisponível";
+                                    System.out.printf("%d | %s | %d | %.2f | %s\n", produtoItem.getId(), produtoItem.getNome(), produtoItem.getQtdEstoque(), produtoItem.getPrecoProduto(), status);
+                                }
+                            }
 
+                            System.out.print("\nEntre com o ID para editar/ativar/inativar, 0 para voltar ou 'i' para incluir um produto novo: ");
+                            String input = scanner.nextLine();
+
+                            //incluir produto
+                            if(input.equalsIgnoreCase("i")){
+                                produtoController.incluirProduto();
+
+                                //Voltar para tela de listagem
+                            } else if (input.equals("0")) {
+                                break;  // Sai do loop de listagem e volta para o menu principal
+
+                                //Edição
+                            }else{
+                                try{
+
+                                    int id = Integer.parseInt(input);
+                                    Produto produto = produtoDao.findProdutoById(id);
+
+                                    if(produto != null){
+                                        produtoController.editarProduto(produto);
+
+                                    }else{
+                                        System.out.println("Produto com id " + produto.getId() + "não encontrado");
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println("ID inválido. Por favor, insira um número válido.");
+                                }
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Erro ao listar Produtos");
+                        }
                     break;
+                    }
 
                 case 2:
                     while (true) { // Loop para permitir retornar à listagem de usuários
@@ -107,25 +151,8 @@ public class Backoffice {
                         }
                     }
                     break;
-
-                case 3:
-                    // Lógica para cadastrar produto
-                    System.out.println("Cadastrando produto...");
-
-                    break;
-
-
-                case 0:
-                    continuar = false;
-                    System.out.println("Saindo do sistema...");
-                    break;
-
-                default:
-                    System.out.println("Opção inválida.");
-                    break;
+                }
             }
         }
-
-        scanner.close(); 
     }
-}
+
