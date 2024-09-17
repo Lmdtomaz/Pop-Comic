@@ -207,7 +207,7 @@ public class ProdutoController {
                     return;
 
                 default:
-                    System.out.println("Opção inválida. Tente novamente.");
+                    System.out.println("Opção inválida. Tente novamente..");
             }
         }
     }
