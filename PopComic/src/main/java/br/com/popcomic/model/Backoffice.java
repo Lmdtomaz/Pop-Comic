@@ -105,7 +105,7 @@ public class Backoffice {
                     }
 
                 case 2:
-                    while (true) { // Loop para permitir retornar à listagem de usuários
+                    while (true) { // Loop para permitir retornar à listagem de usuários.
                         try {
                             // Listar os usuários
                             List<User> users = userDao.listUser();
