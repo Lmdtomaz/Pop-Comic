@@ -11,6 +11,8 @@ public class Produto {
     private int qtdEstoque;
     private List<String> imagens;
     private String imagemPadrao;
+    private boolean habilitado;
+
 
 
     public Produto(String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, List<String> imagens, String imagemPadrao) {

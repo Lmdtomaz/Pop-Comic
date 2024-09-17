@@ -118,7 +118,7 @@ public class Backoffice {
 
 
     }
-    ProdutoDao produtoDao = new ProdutoDao();
+//    ProdutoDao produtoDao = new ProdutoDao();
 
 }
 
