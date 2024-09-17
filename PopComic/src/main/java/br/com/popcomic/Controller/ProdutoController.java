@@ -67,7 +67,7 @@ public class ProdutoController {
                 // Criar um objeto Produto
                 Produto produto = new Produto(nome, preco, quantidadeEstoque, descricao, avaliacao);
 
-                // Cadastrar o produto usando o método da DAO
+                // Cadastrar o produto usando o metodo da DAO
                 boolean sucesso = produtoDao.cadastrarProduto(produto);
 
                 if (sucesso) {
@@ -108,7 +108,7 @@ public class ProdutoController {
             case "1":
                 // Adicionar imagem e continuar incluindo mais imagens
                 adicionarImagem(nomeArquivo, diretorioImagem, isPrincipal);
-                incluirImagem(prod); // Chama o método recursivamente para adicionar mais imagens
+                incluirImagem(prod); // Chama o metodo recursivamente para adicionar mais imagens
                 break;
 
             case "2":
