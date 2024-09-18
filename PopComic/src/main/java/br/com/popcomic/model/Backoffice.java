@@ -15,7 +15,7 @@ public class Backoffice {
 
         Scanner scanner = new Scanner(System.in);
 
-        // Login
+        // Instanciar DAOs e Controllers
         UserDao userDao = new UserDao(); // Instanciar UserDao uma vez aqui
         ProdutoDao produtoDao = new ProdutoDao();
         BackofficeController backofficeController = new BackofficeController(userDao);
@@ -24,12 +24,11 @@ public class Backoffice {
         User user = null;  // Variável para armazenar o usuário logado
 
         while (user == null) {
-
             System.out.print("Usuário: ");
-            String email = scanner.next();
+            String email = scanner.nextLine();
 
             System.out.print("Senha: ");
-            String senha = scanner.next();
+            String senha = scanner.nextLine();
 
             user = userDao.ValidarLogin(email, senha);  // Validar login e armazenar o usuário logado
 
@@ -42,9 +41,7 @@ public class Backoffice {
         }
 
         // Menu de operações após login
-        boolean continuar = true;
-
-        while (continuar) {
+        while (true) {
             System.out.println("--------------- Área Backoffice ------------");
             System.out.println("1- Listar Produtos");
             System.out.println("2- Listar Usuários");
@@ -55,54 +52,57 @@ public class Backoffice {
 
             switch (opc) {
                 case 1:
-                    while (true){
-                        try{
-                            //Listar os produto
-                            List<Produto> produtos = new ProdutoDao().listarProdutos();
+                    while (true) {
+                        try {
+                            // Listar os produtos
+                            List<Produto> produtos = produtoDao.listarProdutos();
                             if (produtos.isEmpty()) {
                                 System.out.println("Nenhum produto encontrado.");
                             } else {
-                                System.out.println("ID | Nome | Quantidade | Valor | Status");
-                                System.out.println("------------------------------------------");
+                                System.out.println("ID | Nome | Quantidade | Valor | Status | Descrição");
+                                System.out.println("--------------------------------------------------------");
                                 for (Produto produtoItem : produtos) {
                                     String status = produtoItem.isStatus() ? "Disponível" : "Indisponível";
-                                    System.out.printf("%d | %s | %d | %.2f | %s\n", produtoItem.getId(), produtoItem.getNome(), produtoItem.getQtdEstoque(), produtoItem.getPrecoProduto(), status);
+                                    System.out.printf("%d | %s | %d | %.2f | %s | %s\n",
+                                            produtoItem.getId(),
+                                            produtoItem.getNome(),
+                                            produtoItem.getQtdEstoque(),
+                                            produtoItem.getPrecoProduto(),
+                                            status,
+                                            produtoItem.getDescricaoDetalhada()
+                                    );
                                 }
                             }
 
                             System.out.print("\nEntre com o ID para editar/ativar/inativar, 0 para voltar ou 'i' para incluir um produto novo: ");
                             String input = scanner.nextLine();
 
-                            //incluir produto
-                            if(input.equalsIgnoreCase("i")){
+                            // Incluir produto
+                            if (input.equalsIgnoreCase("i")) {
                                 produtoController.incluirProduto();
-
-                                //Voltar para tela de listagem
                             } else if (input.equals("0")) {
                                 break;  // Sai do loop de listagem e volta para o menu principal
-
-                                //Edição
-                            }else{
-                                try{
-
+                            } else {
+                                try {
                                     int id = Integer.parseInt(input);
                                     Produto produto = produtoDao.findProdutoById(id);
 
-                                    if(produto != null){
+                                    if (produto != null) {
                                         produtoController.editarProduto(produto);
-
-                                    }else{
-                                        System.out.println("Produto com id " + produto.getId() + "não encontrado");
+                                    } else {
+                                        System.out.println("Produto com ID " + id + " não encontrado.");
                                     }
-                                } catch (Exception e) {
+                                } catch (NumberFormatException e) {
                                     System.out.println("ID inválido. Por favor, insira um número válido.");
+                                } catch (SQLException e) {
+                                    System.out.println("Erro ao encontrar o produto: " + e.getMessage());
                                 }
                             }
-                        } catch (Exception e) {
-                            System.out.println("Erro ao listar Produtos");
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao listar produtos: " + e.getMessage());
                         }
-                    break;
                     }
+                    break;
 
                 case 2:
                     while (true) { // Loop para permitir retornar à listagem de usuários.
@@ -116,22 +116,25 @@ public class Backoffice {
                                 System.out.println("------------------------------------------");
                                 for (User userItem : users) {
                                     String status = userItem.isStatus() ? "Ativo" : "Inativo";
-                                    System.out.printf("%d | %s | %s | %s | %s | %s\n", userItem.getIdUser(), userItem.getNome(), userItem.getCpf(), userItem.getEmail(), status, userItem.getGrupo());
+                                    System.out.printf("%d | %s | %s | %s | %s | %s\n",
+                                            userItem.getIdUser(),
+                                            userItem.getNome(),
+                                            userItem.getCpf(),
+                                            userItem.getEmail(),
+                                            status,
+                                            userItem.getGrupo()
+                                    );
                                 }
                             }
 
-                            // Apresentar as opções após a listagem
                             System.out.print("\nEntre com o ID para editar/ativar/inativar, 0 para voltar ou 'i' para incluir um novo usuário: ");
                             String input = scanner.nextLine();
 
                             // Incluir um novo usuário
-                            if (input.equals("i")) {
+                            if (input.equalsIgnoreCase("i")) {
                                 backofficeController.incluirUsuario();
-
-                                // Voltar para o menu principal
                             } else if (input.equals("0")) {
                                 break;  // Sai do loop de listagem e volta para o menu principal
-
                             } else {
                                 try {
                                     int id = Integer.parseInt(input);
@@ -140,10 +143,12 @@ public class Backoffice {
                                     if (userItem != null) {
                                         backofficeController.editarUsuario(userItem);
                                     } else {
-                                        System.out.println("Usuário com id:" + id + " não encontrado");
+                                        System.out.println("Usuário com ID " + id + " não encontrado.");
                                     }
                                 } catch (NumberFormatException e) {
                                     System.out.println("ID inválido. Por favor, insira um número válido.");
+                                } catch (SQLException e) {
+                                    System.out.println("Erro ao encontrar o usuário: " + e.getMessage());
                                 }
                             }
                         } catch (SQLException e) {
@@ -151,8 +156,15 @@ public class Backoffice {
                         }
                     }
                     break;
-                }
+
+                case 0:
+                    System.out.println("Saindo...");
+                    scanner.close();
+                    return; // Sai do loop e encerra o programa
+
+                default:
+                    System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
-
+}

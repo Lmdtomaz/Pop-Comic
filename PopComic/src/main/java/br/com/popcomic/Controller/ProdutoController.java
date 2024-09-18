@@ -64,10 +64,10 @@ public class ProdutoController {
 
         if (confirmacao.equalsIgnoreCase("Y")) {
             try {
-                // Criar um objeto Produto
+                // Criar um objeto Produto (observação: o campo descrição agora é descriçãoDetalhada)
                 Produto produto = new Produto(nome, preco, quantidadeEstoque, descricao, avaliacao);
 
-                // Cadastrar o produto usando o metodo da DAO
+                // Cadastrar o produto usando o método da DAO
                 boolean sucesso = produtoDao.cadastrarProduto(produto);
 
                 if (sucesso) {
@@ -108,7 +108,7 @@ public class ProdutoController {
             case "1":
                 // Adicionar imagem e continuar incluindo mais imagens
                 adicionarImagem(nomeArquivo, diretorioImagem, isPrincipal);
-                incluirImagem(prod); // Chama o metodo recursivamente para adicionar mais imagens
+                incluirImagem(prod); // Chama o método recursivamente para adicionar mais imagens
                 break;
 
             case "2":
@@ -173,8 +173,8 @@ public class ProdutoController {
                     System.out.println("Alterar avaliação:");
                     produto.setAvaliacao(Double.parseDouble(scanner.nextLine()));
 
-                    // Chama o metodo para atualizar o produto no banco
-                    new ProdutoDao().alterarProduto(produto);
+                    // Chama o método para atualizar o produto no banco
+                    produtoDao.alterarProduto(produto);
                     break;
 
                 case "2": // Lista/Alterar imagens do produto
@@ -187,7 +187,7 @@ public class ProdutoController {
                     produto.setImagemPadrao(scanner.nextLine());
 
                     // Atualiza o produto com as novas imagens
-                    new ProdutoDao().alterarProduto(produto);
+                    produtoDao.alterarProduto(produto);
                     break;
 
                 case "3": // Ativar/Desativar produto
@@ -195,7 +195,6 @@ public class ProdutoController {
 
                     boolean sucesso = produtoDao.StatusProduto(produto.getId(), novoStatusProduto);
                     if (sucesso) {
-                        System.out.println("<<" + produtoDao.StatusProduto(produto.getId(), novoStatusProduto) + ">>");
                         System.out.println("Produto " + (novoStatusProduto ? "ativado" : "desativado") + " com sucesso!");
                         produto.setStatus(novoStatusProduto);
                     } else {
@@ -207,7 +206,7 @@ public class ProdutoController {
                     return;
 
                 default:
-                    System.out.println("Opção inválida. Tente novamente..");
+                    System.out.println("Opção inválida. Tente novamente.");
             }
         }
     }
