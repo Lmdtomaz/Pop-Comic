@@ -1,5 +1,6 @@
 package br.com.popcomic.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,14 +10,14 @@ public class Produto {
     private String nome;
     private double avaliacao;
     private String descricaoDetalhada;
-    private double precoProduto;
+    private BigDecimal precoProduto;
     private int qtdEstoque;
     private boolean status;
     private List<String> imagens;
     private String imagemPadrao;
 
 
-    public Produto(String nome, double precoProduto, int qtdEstoque, String descricaoDetalhada, double avaliacao) {
+    public Produto(String nome, BigDecimal precoProduto, int qtdEstoque, String descricaoDetalhada, double avaliacao) {
         this.nome = nome;
         this.precoProduto = precoProduto;
         this.qtdEstoque = qtdEstoque;
@@ -24,16 +25,18 @@ public class Produto {
         this.avaliacao = avaliacao;
     }
 
-    public Produto(int id, String nome, double precoProduto, int qtdEstoque, double avaliacao, boolean status) {
+
+
+    public Produto(int id, String nome, double avaliacao, String descricaoDetalhada, BigDecimal precoProduto, int qtdEstoque, List<String> imagens, String imagemPadrao) {
         this.id = id;
         this.nome = nome;
+        this.avaliacao = avaliacao;
+        this.descricaoDetalhada = descricaoDetalhada;
         this.precoProduto = precoProduto;
         this.qtdEstoque = qtdEstoque;
-        this.avaliacao = avaliacao;
-        this.status = status;
-    }
-
-    public Produto(String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, ArrayList<Object> objects, Object imagens) {
+        this.imagens = imagens;
+        this.imagemPadrao = imagemPadrao;
+        this.status = false;
     }
 
     public int getId() {
@@ -44,7 +47,7 @@ public class Produto {
         this.id = id;
     }
 
-    public Produto(int id, String nome, double avaliacao, String descricaoDetalhada, double precoProduto, int qtdEstoque, boolean status, List<String> imagens, String imagemPadrao) {
+    public Produto(int id, String nome, double avaliacao, String descricaoDetalhada, BigDecimal precoProduto, int qtdEstoque, boolean status, List<String> imagens, String imagemPadrao) {
         this.id = id;
         this.nome = nome;
         this.avaliacao = avaliacao;
@@ -88,11 +91,11 @@ public class Produto {
         }
     }
 
-    public double getPrecoProduto() {
+    public BigDecimal getPrecoProduto() {
         return precoProduto;
     }
 
-    public void setPrecoProduto(double precoProduto) {
+    public void setPrecoProduto(BigDecimal precoProduto) {
         this.precoProduto = precoProduto;
     }
 

@@ -3,6 +3,7 @@ package br.com.popcomic.Controller;
 import br.com.popcomic.dao.ProdutoDao;
 import br.com.popcomic.model.Produto;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -24,9 +25,9 @@ public class ProdutoController {
         String nome = scanner.nextLine();
 
         System.out.print("Preço => ");
-        double preco;
+        BigDecimal preco;
         try {
-            preco = Double.parseDouble(scanner.nextLine());
+            preco = new BigDecimal(scanner.nextLine());
         } catch (NumberFormatException e) {
             System.out.println("Preço inválido. Tente novamente.");
             return;
@@ -162,7 +163,9 @@ public class ProdutoController {
                     produto.setNome(scanner.nextLine());
 
                     System.out.println("Alterar preço:");
-                    produto.setPrecoProduto(Double.parseDouble(scanner.nextLine()));
+                    produto.setPrecoProduto (BigDecimal.valueOf(Double.parseDouble(scanner.nextLine())));
+
+
 
                     System.out.println("Alterar Estoque:");
                     produto.setQtdEstoque(Integer.parseInt(scanner.nextLine()));

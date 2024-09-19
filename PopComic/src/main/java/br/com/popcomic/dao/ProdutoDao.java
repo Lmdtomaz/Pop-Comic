@@ -32,7 +32,7 @@ public class ProdutoDao {
             psProduto.setString(1, produto.getNome());
             psProduto.setDouble(2, produto.getAvaliacao());
             psProduto.setString(3, produto.getDescricaoDetalhada());
-            psProduto.setDouble(4, produto.getPrecoProduto());
+            psProduto.setBigDecimal(4, produto.getPrecoProduto());
             psProduto.setInt(5, produto.getQtdEstoque());
             psProduto.setString(6, produto.getImagemPadrao());
 
@@ -62,7 +62,7 @@ public class ProdutoDao {
                         rs.getString("nome"),
                         rs.getDouble("avaliacao"),
                         rs.getString("descricaoDetalhada"),
-                        rs.getDouble("precoProduto"),
+                        rs.getBigDecimal("precoProduto"),
                         rs.getInt("qtdEstoque"),
                         rs.getBoolean("status"),
                         new ArrayList<>(), // Inicializa a lista de imagens
@@ -91,10 +91,11 @@ public class ProdutoDao {
                 if (rs.next()) {
                     // Retorna um novo objeto Produto com os dados da linha encontrada
                     return new Produto(
+                            rs.getInt("id"),
                             rs.getString("nome"),
                             rs.getDouble("avaliacao"),
                             rs.getString("descricaoDetalhada"),
-                            rs.getDouble("precoProduto"),
+                            rs.getBigDecimal("precoProduto"),
                             rs.getInt("qtdEstoque"),
                             new ArrayList<>(),  // Inicializa a lista de imagens vazia
                             rs.getString("imagemPadrao")  // Imagem padrão
@@ -118,7 +119,7 @@ public class ProdutoDao {
             psProduto.setString(1, produto.getNome());
             psProduto.setDouble(2, produto.getAvaliacao());
             psProduto.setString(3, produto.getDescricaoDetalhada());
-            psProduto.setDouble(4, produto.getPrecoProduto());
+            psProduto.setBigDecimal(4, produto.getPrecoProduto());
             psProduto.setInt(5, produto.getQtdEstoque());
             psProduto.setString(6, produto.getImagemPadrao());
 
@@ -134,21 +135,20 @@ public class ProdutoDao {
         }
     }
 
-    public boolean StatusProduto(int idProduto, boolean status) throws SQLException {
-        String sql = "UPDATE Produto SET status = ? WHERE id = ?";
-
+    public boolean StatusProduto(int idProduto, boolean novoStatus) {
+        String sql = "UPDATE produto SET status = ? WHERE id = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            // Define o novo status
-            stmt.setBoolean(1, status);
-            // Define o ID do produto
-            stmt.setInt(2, idProduto);
-
-            // Executa a atualização e verifica se alguma linha foi afetada
+            stmt.setBoolean(1, novoStatus); // Define o novo status
+            stmt.setInt(2, idProduto);      // Define o ID do produto
             int rowsAffected = stmt.executeUpdate();
-            return rowsAffected > 0;
+            return rowsAffected > 0;        // Retorna true se a atualização foi bem-sucedida
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return false;                   // Retorna false se houve erro
         }
     }
+
+
+
+
 }

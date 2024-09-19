@@ -32,11 +32,13 @@ public class Backoffice {
 
             user = userDao.ValidarLogin(email, senha);  // Validar login e armazenar o usuário logado
 
-            if (user != null) {
+            if (user != null && !user.getGrupo().equalsIgnoreCase("ESTOQUISTA")) {
                 System.out.println("Login bem-sucedido!");
-                System.out.println("Bem-vindo, " + user.getNome() + "!");
-            } else {
-                System.out.println(" << Não foi possível identificar o usuário, tente novamente! >> ");
+                System.out.println("Bem-vindo, " + user.getNome() + "|" + user.getGrupo());
+
+            }else{
+                System.out.println("Login bem-sucedido!");
+                System.out.println("Bem-vindo, " + user.getNome() + "|" + user.getGrupo());
             }
         }
 
@@ -48,7 +50,7 @@ public class Backoffice {
             System.out.println("0- Sair");
             System.out.print("Escolha (1, 2 ou 0) -> ");
             int opc = scanner.nextInt();
-            scanner.nextLine(); // Consumir o newline após o int
+            scanner.nextLine();
 
             switch (opc) {
                 case 1:
@@ -62,7 +64,7 @@ public class Backoffice {
                                 System.out.println("ID | Nome | Quantidade | Valor | Status | Descrição");
                                 System.out.println("--------------------------------------------------------");
                                 for (Produto produtoItem : produtos) {
-                                    String status = produtoItem.isStatus() ? "Disponível" : "Indisponível";
+                                    String status = produtoItem.isStatus() ? "Ativo" : "Inativo";
                                     System.out.printf("%d | %s | %d | %.2f | %s | %s\n",
                                             produtoItem.getId(),
                                             produtoItem.getNome(),
