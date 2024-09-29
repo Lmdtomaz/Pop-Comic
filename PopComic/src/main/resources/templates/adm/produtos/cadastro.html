@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Cadastro de Produto</title>
+	<link rel="stylesheet" href="/css/Cadastro.css"> <!-- Verifique o caminho correto do CSS -->
+</head>
+<body>
+<h1 th:text="${produto.id == null} ? 'Cadastro de Produto' : 'Editar Produto'">Cadastro de Produto</h1>
+
+<!-- Ajuste o 'action' para usar Thymeleaf e diferenciar entre salvar e atualizar -->
+<form th:action="@{${produto.id == null} ? '/ecommerce/adm/produto/salvar' : '/ecommerce/adm/produto/atualizar'}"
+	  th:object="${produto}" enctype="multipart/form-data" method="post">
+
+	<!-- Campo oculto para o ID do produto -->
+	<input type="hidden" th:field="*{id}" />
+
+	<div>
+		<label for="nome">Nome do Produto:</label>
+		<input type="text" id="nome" th:field="*{nome}" required>
+	</div>
+	<div>
+		<label for="preco">Valor do Produto:</label>
+		<input type="number" step="0.01" id="preco" th:field="*{preco}" required>
+	</div>
+	<div>
+		<label for="estoque">Quantidade em Estoque:</label>
+		<input type="number" id="estoque" th:field="*{estoque}" required>
+	</div>
+	<div>
+		<label for="descricao">Descrição do Produto:</label>
+		<textarea id="descricao" th:field="*{descricao}" rows="4"></textarea>
+	</div>
+	<div>
+		<label for="imagenPrincipal">Imagem do Produto:</label>
+		<input type="file" id="imagenPrincipal" name="file">
+	</div>
+	<div>
+		<label for="avaliacao">Avaliação:</label>
+		<input type="number" step="0.1" id="avaliacao" th:field="*{avaliacao}" min="0" max="5">
+	</div>
+
+	<button type="submit" th:text="${produto.id == null} ? 'Cadastrar Produto' : 'Atualizar Produto'">Cadastrar Produto</button>
+</form>
+
+<!-- Link para voltar à lista de produtos -->
+<a href="/ecommerce/adm/produto/listar">Voltar para a lista de produtos</a>
+
+</body>
+</html>

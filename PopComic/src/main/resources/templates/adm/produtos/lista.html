@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+    <link rel="stylesheet" href="/css/Lista.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>Lista de Produtos</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Preço</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Certifique-se de que o objeto produto é uma lista válida -->
+        <tr th:each="produto : ${produto}">
+            <td th:text="${produto.id}">1</td>
+            <td th:text="${produto.nome}">Nome do Produto</td>
+            <td th:text="${produto.preco}">Preço</td>
+            <td th:text="${produto.status} ? 'Ativo' : 'Inativo'">Status</td>
+            <td>
+                <a th:href="@{/adm/produtos/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</body>
+</html>
