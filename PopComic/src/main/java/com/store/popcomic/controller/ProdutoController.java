@@ -84,5 +84,36 @@ public class ProdutoController {
         return cadastrar(new Produto());
 
     }
+    @GetMapping("produto/{id}")
+    public ModelAndView visualizarProduto(@PathVariable("id") Long id) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (produtoOpt.isPresent()) {
+            ModelAndView mv = new ModelAndView("produto/detalhes");
+            mv.addObject("produto", produtoOpt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/produtodetalhes");
+    }
+    @Autowired
+    private CarrinhoService carrinhoService;
+
+    @PostMapping("/carrinho/adicionar")
+    public ModelAndView adicionarAoCarrinho(@RequestParam Long produtoId) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(produtoId);
+        if (produtoOpt.isPresent()) {
+            carrinhoService.adicionarProduto(produtoOpt.get());
+        }
+        return new ModelAndView("redirect:/ecommerce/carrinho");
+    }
+
+    @GetMapping("/carrinho")
+    public ModelAndView visualizarCarrinho() {
+        ModelAndView mv = new ModelAndView("carrinho");
+        mv.addObject("carrinho", carrinhoService.getItens());
+        return mv;
+    }
+
+
+
 
 }
