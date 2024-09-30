@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("ecommerce")
 public class ProdutoController {
 
-    private static String caminhoImagens = "C:\\Users\\leandro\\Downloads\\imagens";
+    private static String caminhoImagens = "C:\\Users\\Operações\\Downloads\\imagens";
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -40,14 +40,17 @@ public class ProdutoController {
 
     @GetMapping("adm/produto/editar/{id}")
     public ModelAndView editar(@PathVariable("id") Long id){
-        Optional<Produto> produtoOpt = produtoRepository.findById(id);
-        if(produtoOpt.isPresent()){
-            ModelAndView mv = new ModelAndView("adm/produtos/cadastro");
-            mv.addObject("produto", produtoOpt.get());
-            return mv;
+        Optional<Produto> produto = produtoRepository.findById(id);
+
+        if(produto.isPresent()) {
+            return cadastrar(produto.get());
+        } else {
+            return new ModelAndView("redirect:/adm/produto/listar"); // Redireciona se o produto não for encontrado
         }
-        return new ModelAndView("redirect:/adm/produto/listar");
     }
+
+
+
     @GetMapping("adm/produto/alterarStatus/{id}")
     public ModelAndView remover(@PathVariable("id") Long id){
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
@@ -61,28 +64,63 @@ public class ProdutoController {
         return new ModelAndView("redirect:/adm/produto/listar");
     }
 
-    @PostMapping("adm/produto/salvar")
-    public ModelAndView salvar(@Validated Produto produto, BindingResult result, @RequestParam("file")MultipartFile arquivo){
-        if(result.hasErrors()){
-            return cadastrar(produto);
+
+    @GetMapping("adm/produto/uploadImagem/{id}")
+    public ModelAndView uploadImagem(@PathVariable("id") Long id) {
+        Optional<Produto> produto = produtoRepository.findById(id);
+
+        if (produto.isPresent()) {
+            ModelAndView mv = new ModelAndView("adm/produtos/uploadImagem");
+            mv.addObject("produto", produto.get());
+            return mv;
+        } else {
+            // Redireciona caso o produto não exista
+            return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
         }
-
-        produtoRepository.saveAndFlush(produto);
-        try{
-            if(!arquivo.isEmpty()){
-                byte[] bytes = arquivo.getBytes();
-                Path caminho = Paths.get(caminhoImagens+ String.valueOf(produto.getId())+ arquivo.getOriginalFilename());
-                Files.write(caminho, bytes);
-
-                produto.setImagenPrincipal(String.valueOf(produto.getId())+ arquivo.getOriginalFilename());
-
-            }
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-        return cadastrar(new Produto());
-
     }
+
+    @PostMapping("adm/produto/salvarImagem")
+    public ModelAndView salvarImagem(@RequestParam("file") MultipartFile arquivo, @RequestParam("id") Long id) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+
+        if (produtoOpt.isPresent()) {
+            Produto produto = produtoOpt.get();
+
+            try {
+                if (!arquivo.isEmpty()) {
+                    byte[] bytes = arquivo.getBytes();
+                    Path caminho = Paths.get(caminhoImagens + String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
+                    Files.write(caminho, bytes);
+
+                    produto.setImagenPrincipal(String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
+                    produtoRepository.saveAndFlush(produto);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Redireciona para a lista de produtos após o upload
+            return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
+        } else {
+            // Redireciona caso o produto não exista
+            return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
+        }
+    }
+
+
+
+    @PostMapping("adm/produto/salvarInicial")
+    public ModelAndView salvarInicial(@Validated Produto produto, BindingResult result) {
+        if (result.hasErrors()) {
+            return cadastrar(produto);  // Volta para o formulário se houver erros
+        }
+
+        // Salva o produto sem a imagem
+        produtoRepository.saveAndFlush(produto);
+
+        // Redireciona para a página de upload de imagem com o ID do produto
+        return new ModelAndView("redirect:/ecommerce/adm/produto/uploadImagem/" + produto.getId());
+    }
+
 
 }

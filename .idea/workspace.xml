@@ -5,6 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="752807f3-c6a1-4364-92de-d0d8db1a50b4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/BackOfficeEstoquista.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/BackofficeController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/ProdutoController.java" beforeDir="false" />
