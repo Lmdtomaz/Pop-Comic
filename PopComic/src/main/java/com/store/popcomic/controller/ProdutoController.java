@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("ecommerce")
 public class ProdutoController {
 
-    private static String caminhoImagens = "C:\\Users\\Operações\\Downloads\\imagens";
+    private static String caminhoImagens = "C:\\Users\\Operações\\Downloads\\imagens\\";
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -89,7 +89,7 @@ public class ProdutoController {
             try {
                 if (!arquivo.isEmpty()) {
                     byte[] bytes = arquivo.getBytes();
-                    Path caminho = Paths.get(caminhoImagens + String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
+                            Path caminho = Paths.get(caminhoImagens + String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
                     Files.write(caminho, bytes);
 
                     produto.setImagenPrincipal(String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
@@ -105,6 +105,14 @@ public class ProdutoController {
             // Redireciona caso o produto não exista
             return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
         }
+    }
+
+
+    @GetMapping("/imagem/{nomeImagem}")
+    @ResponseBody
+    public byte[] mostrarImagem(@PathVariable("nomeImagem") String nomeImagem) throws IOException {
+        Path caminho = Paths.get(caminhoImagens, nomeImagem);
+        return Files.readAllBytes(caminho);
     }
 
 
