@@ -94,24 +94,7 @@ public class ProdutoController {
         }
         return new ModelAndView("redirect:/produtodetalhes");
     }
-    @Autowired
-    private CarrinhoService carrinhoService;
 
-    @PostMapping("/carrinho/adicionar")
-    public ModelAndView adicionarAoCarrinho(@RequestParam Long produtoId) {
-        Optional<Produto> produtoOpt = produtoRepository.findById(produtoId);
-        if (produtoOpt.isPresent()) {
-            carrinhoService.adicionarProduto(produtoOpt.get());
-        }
-        return new ModelAndView("redirect:/ecommerce/carrinho");
-    }
-
-    @GetMapping("/carrinho")
-    public ModelAndView visualizarCarrinho() {
-        ModelAndView mv = new ModelAndView("carrinho");
-        mv.addObject("carrinho", carrinhoService.getItens());
-        return mv;
-    }
 
 
 
