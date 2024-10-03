@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload de Imagem</title>
+  <link rel="stylesheet" href="/css/uploadingImagem.css">
+</head>
+<body>
+<h1>Upload de Imagem para o Produto</h1>
+
+<form th:action="@{/ecommerce/adm/produto/salvarImagem}" method="post" enctype="multipart/form-data">
+  <input type="hidden" th:value="${produto.id}" name="id"/>
+  <div>
+    <label for="imagem">Imagem do Produto:</label>
+    <input type="file" id="imagem" name="file" required>
+  </div>
+  <button type="submit">Salvar Imagem</button>
+</form>
+
+<!-- Link para voltar ao cadastro de produtos -->
+<a href="/ecommerce/adm/produto/listar">Voltar para a lista de produtos</a>
+</body>
+</html>

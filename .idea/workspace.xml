@@ -4,10 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e28b7495-b41f-4796-a8b1-1df827c6c550" name="Changes" comment="">
+    <list default="true" id="752807f3-c6a1-4364-92de-d0d8db1a50b4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/IndexController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/styles.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/uploadingImagem.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/imagens/10021.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/imagens/1052seilaa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/js/scripts.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/uploadImagem.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/data/test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/data/test.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/data/test.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/data/test.trace.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/DetalhesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/DetalhesController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ProdutoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ProdutoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Produto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/Detalhes.css" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/Detalhes.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/cadastro.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/cadastro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/detalhes.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/detalhes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/lista.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/adm/produtos/lista.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,7 +33,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Class" />
       </list>
     </option>
@@ -27,34 +42,51 @@
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 6
+  &quot;associatedIndex&quot;: 3
 }</component>
-  <component name="ProjectId" id="2mnbdrjiKZSbcXRRo1SakzxFknt" />
+  <component name="ProjectId" id="2mIbOhDGHfZGWmVLM3hqNgQMoLp" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.PopcomicApplication.executor&quot;: &quot;Run&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Maven.popcomic [org.springframework.boot:spring-boot-maven-plugin:3.3.4:run].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;GustavoSpring&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/GustavoRochadeSousa/Pop-Comic&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Backoffice.executor": "Run",
+    "Maven.PopComic [org.apache.tomcat.maven:tomcat7-maven-plugin:2.1:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "Merging GustavoSpring",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Operações/Pop-Comic/PopComic"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Backoffice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="br.com.popcomic.model.Backoffice" />
+      <module name="PopComic" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="br.com.popcomic.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Backoffice" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="e28b7495-b41f-4796-a8b1-1df827c6c550" name="Changes" comment="" />
-      <created>1727715378583</created>
+      <changelist id="752807f3-c6a1-4364-92de-d0d8db1a50b4" name="Changes" comment="" />
+      <created>1726767007213</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1727715378583</updated>
+      <updated>1726767007213</updated>
     </task>
     <servers />
   </component>
