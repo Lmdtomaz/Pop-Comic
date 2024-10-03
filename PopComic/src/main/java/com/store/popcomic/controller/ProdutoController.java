@@ -84,40 +84,4 @@ public class ProdutoController {
         return cadastrar(new Produto());
 
     }
-
-    //Pagina para mostrar o carrinho
-    @GetMapping ("/carrinho")
-    public ModelAndView chamarCarrinho(){
-        ModelAndView mv = new ModelAndView("carrinho");
-        return mv;
-    }
-
-//    @PostMapping("/carrinho/remover/{produtoId}")
-//    public ModelAndView removerProdutoDoCarrinho(@PathVariable("produtoId") Long produtoId) {
-//        Optional<Carrinho> carrinhoOpt = carrinhoRepository.findById(1L);
-//        if (carrinhoOpt.isPresent()) {
-//            Carrinho carrinho = carrinhoOpt.get();
-//
-//            // Buscar o produto que deve ser removido
-//            Optional<Produto> produtoOpt = produtoRepository.findById(produtoId);
-//            if (produtoOpt.isPresent()) {
-//                Produto produto = produtoOpt.get();
-//
-//                // Remover o produto da lista
-//                carrinho.getProdutos().remove(produto);
-//
-//                // Recalcular o total
-//                carrinho.calcularTotal();
-//
-//                // Salvar o carrinho atualizado
-//                carrinhoRepository.save(carrinho);
-//            }
-//        }
-//
-//        // Retornar para a página do carrinho
-//        return new ModelAndView("redirect:/ecommerce/carrinho");
-//    }
-
-
-
 }
