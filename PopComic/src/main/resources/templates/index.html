@@ -138,7 +138,8 @@
                     <!-- Product actions-->
                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                         <div class="text-center">
-                            <a class="btn btn-outline-dark mt-auto" href="#">Ver detalhes</a>
+                            <a class="btn btn-outline-dark mt-auto" th:href="@{'/ecommerce/produto/detalhes/' + ${produto.id}}">Ver detalhes</a>
+
                         </div>
                     </div>
                 </div>

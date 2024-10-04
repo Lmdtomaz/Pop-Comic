@@ -12,7 +12,7 @@
         <h1 class="produto-nome" th:text="${produto.nome}"></h1>
         <div class="produto-carrossel">
             <div class="imagens-carrossel">
-                <!-- Exibe as imagens do produto -->
+                <!-- Exibe a imagem principal do produto -->
                 <div class="imagem-principal">
                     <img th:src="@{/ecommerce/imagem/{img}(img=${produto.imagenPrincipal})}" th:alt="${produto.nome}">
                 </div>

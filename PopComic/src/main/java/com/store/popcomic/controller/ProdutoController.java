@@ -31,7 +31,7 @@ public class ProdutoController {
         mv.addObject("produto", produto);
         return mv;
     }
-    @GetMapping("adm/produto/listar")
+        @GetMapping("adm/produto/listar")
     public ModelAndView listar(){
         ModelAndView mv = new ModelAndView("adm/produtos/lista");
         mv.addObject("produto", produtoRepository.findAll());
@@ -78,6 +78,7 @@ public class ProdutoController {
             return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
         }
     }
+
     @GetMapping("produto/{id}")
     public ModelAndView visualizarProduto(@PathVariable("id") Long id) {
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
@@ -146,3 +147,4 @@ public class ProdutoController {
 
 
 }
+
