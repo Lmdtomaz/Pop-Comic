@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="52ea1ebe-b96f-467d-9f29-77c5deb12c91" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/controller/UsuarioController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/model/UsuarioCliente.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/repository/UsuarioDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/service/ServiceExc.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/service/ServiceUsuario.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/util/Util.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/templates/adm/produtos/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PI 4.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PI-4-Semestre.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/controller/DetalhesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/java/com/store/popcomic/controller/DetalhesController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/static/css/Carrinho.css" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/static/css/login.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/static/css/Lista.css" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/static/css/Lista.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/templates/adm/produtos/carrinho.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/PopComic/src/main/resources/templates/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/data/test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/Pop-Comic/Pop-Comic/data/test.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/BackOfficeEstoquista.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/BackofficeController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/Controller/ProdutoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/dao/ProdutoDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/dao/UserDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/model/Backoffice.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/model/Encriptada.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/model/Produto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/br/com/popcomic/model/User.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/DB/V2__create-table-users.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/DB/V3_create-table-produtos.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/webapp/index.jsp" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/Pop-Comic/Pop-Comic" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="2nOquMKE9yvjtExtjNtqLL3pzcG" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/Usuário/Downloads/Pop-Comic"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="52ea1ebe-b96f-467d-9f29-77c5deb12c91" name="Changes" comment="" />
+      <created>1728854691492</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1728854691492</updated>
+    </task>
+    <servers />
+  </component>
+</project>
