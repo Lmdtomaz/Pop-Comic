@@ -1,9 +1,16 @@
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Cart</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
 
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container">
         <a class="navbar-brand" href="index.html">Simple Ecommerce</a>
@@ -47,6 +54,7 @@
         </div>
     </div>
 </nav>
+
 <section class="jumbotron text-center">
     <div class="container">
         <h1 class="jumbotron-heading">E-COMMERCE CART</h1>
@@ -60,38 +68,84 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col"> </th>
-                        <th scope="col">Product</th>
-                        <th scope="col">Available</th>
-                        <th scope="col" class="text-center">Quantity</th>
-                        <th scope="col" class="text-right">Price</th>
-                        <th> </th>
+                        <th scope="col">Imagem</th>
+                        <th scope="col">Produto</th>
+                        <th scope="col">Em estoque</th>
+                        <th scope="col" class="text-center">Quantidade</th>
+                        <th scope="col" class="text-right">Preço</th>
+                        <th scope="col" class="text-center">Ações</th> <!-- Coluna para os botões -->
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="compra : ${carrinho}">
+                        <td th:text="${compra.imagemProduto}">Imagem Produto</td>
                         <td th:text="${compra.nomeProduto}">Nome do Produto</td>
+                        <td th:text="${compra.StatusString}">Status</td>
+                        <td>
+                            <form th:action="@{/carrinho/atualizar/{id}(id=${compra.id})}" method="post">
+                                <button type="button" class="btn btn-sm btn-success quantity-left-minus" data-id="${compra.id}">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                                <input type="number" name="quantidade" th:value="${compra.quantidade}" min="1" style="width: 50px;" readonly>
+                                <button type="button" class="btn btn-sm btn-success quantity-right-plus" data-id="${compra.id}">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </form>
+                        </td>
                         <td th:text="${compra.precoProduto}">Preço do Produto</td>
+                        <td class="text-center">
+                            <form th:action="@{/carrinho/remover/{id}(id=${compra.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-danger">Remover</button>
+                            </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
+
+                <div class="total-container text-right">
+                    <h5>Total: R$ <span id="valorTotal">0.00</span></h5>
+                </div>
+
+
             </div>
         </div>
         <div class="col mb-2">
             <div class="row">
-                <div class="col-sm-12  col-md-6">
+                <div class="col-sm-12 col-md-6">
                     <button class="btn btn-block btn-light">Continue Shopping</button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                    <button class="btn btn-lg btn-block btn-success text-uppercase" id="btnCheckout">
+                        Checkout
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-
+<!-- Modal de Checkout -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Valor Total: R$ <span id="modalTotal">0.00</span></p>
+                <p>Frete: R$ <span id="modalFrete">0.00</span></p>
+                <h6>Total Final: R$ <span id="modalTotalFinal">0.00</span></h6>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary">Confirmar Pedido</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
@@ -100,18 +154,54 @@
 
 <script>
     $(document).ready(function() {
-        $('.quantity-right-plus').click(function(e) {
-            e.preventDefault();
-            var quantity = parseInt($(this).parent().siblings('input').val());
-            $(this).parent().siblings('input').val(quantity + 1);
+        function atualizarValorTotal() {
+            let total = 0;
+            $('tbody tr').each(function() {
+                const preco = parseFloat($(this).find('td:nth-child(5)').text().replace('R$', '').replace(',', '.'));
+                const quantidade = parseInt($(this).find('input[name="quantidade"]').val());
+                total += preco * quantidade;
+            });
+            $('#valorTotal').text(total.toFixed(2).replace('.', ','));
+            return total; // Retorna o total para uso posterior
+        }
+
+        $('#btnCheckout').click(function() {
+            const total = atualizarValorTotal(); // Atualiza o valor total
+            const frete = Math.floor(Math.random() * 30) + 1; // Gera um valor entre 1 e 30
+            const totalFinal = total + frete;
+
+            // Atualiza os valores do modal
+            $('#modalTotal').text(total.toFixed(2).replace('.', ','));
+            $('#modalFrete').text(frete.toFixed(2).replace('.', ','));
+            $('#modalTotalFinal').text(totalFinal.toFixed(2).replace('.', ','));
+
+            // Exibe o modal
+            $('#checkoutModal').modal('show');
         });
 
-        $('.quantity-left-minus').click(function(e) {
+        $('.quantity-right-plus, .quantity-left-minus').click(function(e) {
             e.preventDefault();
-            var quantity = parseInt($(this).parent().siblings('input').val());
-            if (quantity > 1) {
-                $(this).parent().siblings('input').val(quantity - 1);
+            var form = $(this).closest('form');
+            var quantityInput = form.find('input[name="quantidade"]');
+            var quantity = parseInt(quantityInput.val());
+
+            if ($(this).hasClass('quantity-right-plus')) {
+                quantityInput.val(quantity + 1);
+            } else {
+                if (quantity > 1) {
+                    quantityInput.val(quantity - 1);
+                } else {
+                    if (confirm("Você deseja remover este item do carrinho?")) {
+                        window.location.href = form.attr('action').replace('atualizar', 'remover');
+                    }
+                }
             }
+            atualizarValorTotal(); // Atualiza o total após modificar a quantidade
         });
+
+        atualizarValorTotal(); // Atualiza o total no carregamento
     });
 </script>
+
+</body>
+</html>
