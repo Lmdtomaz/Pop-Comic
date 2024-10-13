@@ -1,0 +1,20 @@
+<<<<<<< HEAD
+CREATE TABLE Produto (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(255) NOT NULL,
+    avaliacao DOUBLE,
+    descricaoDetalhada TEXT,
+    precoProduto DECIMAL(10, 2) NOT NULL,
+    qtdEstoque INT NOT NULL,
+    status BOOLEAN DEFAULT TRUE,
+    imagemPadrao VARCHAR(255),
+    imagens TEXT
+=======
+CREATE TABLE Produtos (
+    CODIGO INT PRIMARY KEY AUTO_INCREMENT,
+    NOME VARCHAR(255) NOT NULL,
+    QUANTIDADE INT NOT NULL,
+    VALOR DECIMAL(10,2) NOT NULL,
+    STATUS VARCHAR(50) NOT NULL DEFAULT 'ATIVO'
+>>>>>>> ae882f66f0757c56bc819dfa142072ac12a14d1b
+);
