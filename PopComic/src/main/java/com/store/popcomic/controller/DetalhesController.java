@@ -15,6 +15,8 @@ import java.util.Optional;
 @RequestMapping("/ecommerce")
 public class DetalhesController {
 
+
+
     @Autowired
     private ProdutoRepository produtoRepository;
 

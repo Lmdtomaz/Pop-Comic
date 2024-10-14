@@ -1,0 +1,48 @@
+.Login-Form {
+    min-height: 800px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    background-color: #28243d;
+
+}
+
+.form{
+background-color: #1aba1f;
+}
+
+.main-div {
+    background: #fff;
+    border-radius: 5px;
+    margin: 0 auto;
+    max-width: 50%;
+    padding: 50px 70px;
+}
+
+.form-control {
+    background: #f7f7f7;
+    border-radius: 7px;
+    font-size: 15px;
+    height: 50px;
+    border: 2px solid #d4d4d4;
+}
+
+.form-group{margin: 10px}
+
+.btn-login {
+    background-color: #1aba1f; /* Cor para o botão Login */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+}
+
+.btn-cadastrar {
+    background-color: #28243d; /* Cor para o botão Cadastre-se */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove a borda padrão */
+}
