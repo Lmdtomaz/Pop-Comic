@@ -14,12 +14,26 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cliente {
+
 @Id
 private String cpf;
+
 private String nome;
+
 @Column(name = "data_nascimento") // Define o nome da coluna no banco, opcional
+
 private LocalDate dataNascimento;
+
 private String genero;
+
 private String senha;
+
+private String MainEndereco;
+
+private String MainNumeroResidencia;
+
+private String MainInfosAdicionaisResidencia;
+
+private String Maincep;
 
 }
