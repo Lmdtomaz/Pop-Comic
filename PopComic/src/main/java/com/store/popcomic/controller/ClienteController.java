@@ -2,6 +2,7 @@ package com.store.popcomic.controller;
 
 import com.store.popcomic.model.Cliente;
 import com.store.popcomic.repository.ClienteRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,8 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    private ClienteRepository clienteService;
 
-    // Exibir formulário de cadastro
     @GetMapping("/cadastro")
     public ModelAndView novoClienteForm() {
         ModelAndView mv = new ModelAndView("cadastro");
@@ -114,4 +115,6 @@ public class ClienteController {
         if (digito2 >= 10) digito2 = 0;
         return digito2 == Character.getNumericValue(cpf.charAt(10));
     }
+
+
 }

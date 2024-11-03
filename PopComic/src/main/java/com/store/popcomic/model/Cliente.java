@@ -15,25 +15,29 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Cliente {
 
-@Id
-private String cpf;
+    @Id
+    private String cpf;
 
-private String nome;
+    private String nome;
 
-@Column(name = "data_nascimento") // Define o nome da coluna no banco, opcional
+    @Column(name = "data_nascimento") // Define o nome da coluna no banco, opcional
+    private LocalDate dataNascimento;
 
-private LocalDate dataNascimento;
+    private String genero;
 
-private String genero;
+    private String senha; // Senha em formato hashed
 
-private String senha;
+    private String MainEndereco;
 
-private String MainEndereco;
+    private String MainNumeroResidencia;
 
-private String MainNumeroResidencia;
+    private String MainInfosAdicionaisResidencia;
 
-private String MainInfosAdicionaisResidencia;
+    private String Maincep;
 
-private String Maincep;
+    private String email;
+
+
+
 
 }
