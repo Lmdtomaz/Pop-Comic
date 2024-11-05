@@ -17,7 +17,6 @@ public class ClienteController {
 
     @Autowired
     private ClienteRepository clienteRepository;
-    private ClienteRepository clienteService;
 
     @GetMapping("/cadastro")
     public ModelAndView novoClienteForm() {
@@ -54,21 +53,54 @@ public class ClienteController {
         return modelAndView;
     }
 
-    // Formulário para editar cliente
-    @GetMapping("/clientes/editar/{cpf}")
-    public ModelAndView editarClienteForm(@PathVariable String cpf) {
+    @GetMapping("/usuario/editar/{cpf}")
+    public ModelAndView editarPerfil(@PathVariable String cpf, HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("editarCliente");
         Optional<Cliente> cliente = clienteRepository.findById(cpf);
-        cliente.ifPresent(value -> modelAndView.addObject("cliente", value));
+
+        if (cliente.isPresent()) {
+            modelAndView.addObject("cliente", cliente.get());
+        } else {
+            modelAndView.addObject("error", "Cliente não encontrado.");
+        }
+
         return modelAndView;
     }
 
-    // Atualizar cliente
-    @PostMapping("/clientes/atualizar/{cpf}")
-    public String atualizarCliente(@PathVariable String cpf, @ModelAttribute Cliente clienteAtualizado) {
-        clienteAtualizado.setCpf(cpf); // Mantém o CPF do cliente
-        clienteRepository.save(clienteAtualizado);
-        return "redirect:/ecommerce/clientes";
+    @PostMapping("/usuario/atualizar")
+    public String atualizarCliente(@ModelAttribute Cliente clienteAtualizado, HttpSession session) {
+        String cpf = (String) session.getAttribute("userCpf");
+
+        // Busca o cliente existente no banco de dados
+        Optional<Cliente> clienteExistenteOpt = clienteRepository.findById(cpf);
+
+        if (clienteExistenteOpt.isPresent()) {
+            Cliente clienteExistente = clienteExistenteOpt.get();
+
+            // Atualiza apenas os campos que foram enviados
+            if (clienteAtualizado.getNome() != null) {
+                clienteExistente.setNome(clienteAtualizado.getNome());
+            }
+            if (clienteAtualizado.getEmail() != null) {
+                clienteExistente.setEmail(clienteAtualizado.getEmail());
+            }
+            if (clienteAtualizado.getDataNascimento() != null) {
+                clienteExistente.setDataNascimento(clienteAtualizado.getDataNascimento());
+            }
+            if (clienteAtualizado.getGenero() != null) {
+                clienteExistente.setGenero(clienteAtualizado.getGenero());
+            }
+            // Não atualiza a senha se não for enviada
+            if (clienteAtualizado.getSenha() != null && !clienteAtualizado.getSenha().isEmpty()) {
+                clienteExistente.setSenha(clienteAtualizado.getSenha());
+            }
+
+            // Salva as alterações no banco de dados
+            clienteRepository.save(clienteExistente);
+        }
+
+        // Redireciona para a página de perfil
+        return "redirect:/perfil"; // Redireciona para a página de detalhes do cliente
     }
 
     // Excluir cliente
@@ -81,20 +113,16 @@ public class ClienteController {
     // Método para validar CPF
     private boolean isCpfValido(String cpf) {
         // Implementação básica para validação de CPF
-        // Remover caracteres não numéricos
         cpf = cpf.replaceAll("[^0-9]", "");
 
-        // CPF deve ter 11 dígitos
         if (cpf.length() != 11) {
             return false;
         }
 
-        // Validação de dígitos repetidos (ex: 111.111.111-11)
         if (cpf.matches("(\\d)\\1{10}")) {
             return false;
         }
 
-        // Lógica de validação do CPF
         int soma = 0;
         int peso = 10;
         for (int i = 0; i < 9; i++) {
@@ -115,6 +143,4 @@ public class ClienteController {
         if (digito2 >= 10) digito2 = 0;
         return digito2 == Character.getNumericValue(cpf.charAt(10));
     }
-
-
 }

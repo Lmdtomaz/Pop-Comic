@@ -32,7 +32,10 @@ public class LoginController {
         Optional<Cliente> cliente = clienteRepository.findByEmailAndSenha(email, senha);
         if (cliente.isPresent()) {
             session.setAttribute("usuarioLogado", cliente.get());
+            session.setAttribute("userCpf", cliente.get().getCpf()); // Armazena o CPF na sessão
             System.out.println("Cliente Logado");
+            System.out.println("CPF armazenado na sessão: " + session.getAttribute("userCpf"));
+
             return new ModelAndView("redirect:/"); // Aqui é onde você redireciona após o login.
         } else {
             ModelAndView mv = new ModelAndView("login");
@@ -41,7 +44,6 @@ public class LoginController {
             return mv;
         }
     }
-
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
