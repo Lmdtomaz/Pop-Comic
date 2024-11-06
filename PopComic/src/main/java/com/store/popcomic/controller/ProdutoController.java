@@ -32,7 +32,7 @@ public class ProdutoController {
         mv.addObject("produto", produto);
         return mv;
     }
-    @GetMapping("adm/produto/listar")
+        @GetMapping("adm/produto/listar")
     public ModelAndView listar(){
         ModelAndView mv = new ModelAndView("adm/produtos/lista");
         mv.addObject("produto", produtoRepository.findAll());
@@ -80,6 +80,21 @@ public class ProdutoController {
         }
     }
 
+    @GetMapping("produto/{id}")
+    public ModelAndView visualizarProduto(@PathVariable("id") Long id) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (produtoOpt.isPresent()) {
+            ModelAndView mv = new ModelAndView("produto/detalhes");
+            mv.addObject("produto", produtoOpt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/produtodetalhes");
+    }
+
+
+
+
+
     @PostMapping("adm/produto/salvarImagem")
     public ModelAndView salvarImagem(@RequestParam("file") MultipartFile arquivo, @RequestParam("id") Long id) {
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
@@ -124,3 +139,4 @@ public class ProdutoController {
 
 
 }
+

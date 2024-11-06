@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -17,6 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 
 public class Produto {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

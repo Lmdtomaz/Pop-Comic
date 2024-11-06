@@ -29,9 +29,10 @@
             <td th:text="${produto.preco}">Preço</td>
             <td th:text="${produto.status} ? 'Ativo' : 'Inativo'">Status</td>
             <td>
-                <a th:href="@{adm/produto/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
+                <a th:href="@{/ecommerce/adm/produto/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a>
 
             </td>
+
         </tr>
         </tbody>
     </table>

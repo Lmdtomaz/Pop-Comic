@@ -1,0 +1,31 @@
+    .input-group {
+        width: 150px; /* Largura fixa para o grupo de entrada */
+    }
+
+    .input-number {
+        text-align: center; /* Centraliza o texto no campo */
+        width: 60px; /* Define uma largura para o campo de entrada */
+    }
+
+    .btn-number {
+        width: 35px; /* Largura dos botões */
+        height: 35px; /* Altura dos botões */
+        border-radius: 2; /* Remove bordas arredondadas */
+    }
+
+    /* Estilos para a tabela */
+    .table {
+        border-collapse: collapse;
+    }
+
+    .table th, .table td {
+        vertical-align: middle; /* Alinha o conteúdo ao meio */
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f9f9f9; /* Cor de fundo para linhas ímpares */
+    }
+
+    .btn-light {
+        background-color: #f8f9fa; /* Cor de fundo para o botão de continuar comprando */
+    }

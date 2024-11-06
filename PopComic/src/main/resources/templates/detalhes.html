@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Produto</title>
+    <link rel="stylesheet" th:href="@{/css/detalhes.css}">
+</head>
+<body>
+<div class="container">
+    <div class="produto-detalhes">
+        <h1 class="produto-nome" th:text="${produto.nome}"></h1>
+        <div class="produto-carrossel">
+            <div class="imagens-carrossel">
+                <!-- Exibe a imagem principal do produto -->
+                <div class="imagem-principal">
+                    <img th:src="@{/ecommerce/imagem/{img}(img=${produto.imagenPrincipal})}" th:alt="${produto.nome}">
+                </div>
+                <div class="outras-imagens">
+                    <!-- Loop para as outras imagens -->
+                    <ul>
+                        <li th:each="imagem : ${imagens}">
+                            <img th:src="@{/ecommerce/imagem/{img}(img=${imagem})}" th:alt="${produto.nome}">
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="produto-info">
+            <p class="produto-descricao" th:text="${produto.descricao}"></p>
+            <p class="produto-preco">Preço: R$ <span th:text="${produto.preco}"></span></p>
+            <p class="produto-avaliacao">Avaliação: <span th:text="${produto.avaliacao}"></span> / 5</p>
+        </div>
+
+
+        <form th:action="@{/ecommerce/carrinho/{id}(id=${produto.id})}" method="post">
+            <input type="hidden" name="nomeProduto" th:value="${produto.nome}" />
+            <input type="hidden" name="precoProduto" th:value="${produto.preco}" />
+            <button type="submit" class="btn-comprar">Adicionar ao Carrinho</button>
+        </form>
+
+
+
+
+    </div>
+</div>
+</body>
+</html>
