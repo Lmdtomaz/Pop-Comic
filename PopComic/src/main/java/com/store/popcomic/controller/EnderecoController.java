@@ -71,4 +71,7 @@ public class EnderecoController {
 
         return "escolherPagamento";
     }
+
+    //comentário apenas para mudar e fazer um novo commit
+    
 }
