@@ -29,7 +29,7 @@ public class DetalhesController {
 
         if (produtoOpt.isPresent()) {
             Produto produto = produtoOpt.get();
-            ModelAndView mv = new ModelAndView("produto/detalhes");
+            ModelAndView mv = new ModelAndView("detalhes");
             mv.addObject("produto", produto);
             mv.addObject("imagens", produto.getImagens());
             mv.addObject("avaliacao", produto.getAvaliacao());

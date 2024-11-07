@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Cadastro de Cliente</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container mt-5">
+  <h2>Cadastro de Cliente</h2>
+  <form id="cadastro-form" action="/ecommerce/salvar" method="post">
+    <div class="mb-3">
+      <label for="cpf" class="form-label">CPF</label>
+      <input type="text" class="form-control" id="cpf" name="cpf" required>
+    </div>
+    <div class="mb-3">
+      <label for="nome" class="form-label">Nome</label>
+      <input type="text" class="form-control" id="nome" name="nome" required>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input type="text" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+      <label for="dataNascimento" class="form-label">Data de Nascimento</label>
+      <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" required>
+    </div>
+    <div class="mb-3">
+      <label for="genero" class="form-label">Gênero</label>
+      <input type="text" class="form-control" id="genero" name="genero">
+    </div>
+    <div class="mb-3">
+      <label for="MainEndereco" class="form-label">Longradouro</label>
+      <input type="text" class="form-control" id="MainEndereco" name="MainEndereco">
+    </div>
+    <div class="mb-3">
+      <label for="MainNumeroResidencia" class="form-label">Numero</label>
+      <input type="number" class="form-control" id="MainNumeroResidencia" name="MainNumeroResidencia">
+    </div>
+    <div class="mb-3">
+      <label for="MainInfosAdicionaisResidencia" class="form-label">Informacoes Adicionais</label>
+      <input type="text" class="form-control" id="MainInfosAdicionaisResidencia" name="MainInfosAdicionaisResidencia">
+    </div>
+    <div class="mb-3">
+      <label for="senha" class="form-label">Senha</label>
+      <input type="password" class="form-control" id="senha" name="senha" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Cadastrar</button>
+  </form>
+
+  <div id="error-popup" class="alert alert-danger mt-3" role="alert" style="display: none;">
+    CPF inválido.
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+        document.getElementById("cadastro-form").addEventListener("submit", function(event) {
+            var cpf = document.getElementById("cpf").value;
+            if (!isValidCPF(cpf)) {
+                event.preventDefault(); // Impede o envio do formulário
+                document.getElementById("error-popup").style.display = "block"; // Mostra o popup de erro
+            } else {
+                document.getElementById("error-popup").style.display = "none"; // Esconde o popup de erro
+            }
+        });
+
+        function isValidCPF(cpf) {
+            // Remover caracteres não numéricos
+            cpf = cpf.replace(/\D/g, "");
+
+            // CPF deve ter 11 dígitos
+            if (cpf.length !== 11) {
+                return false;
+            }
+
+            // Validação de dígitos repetidos (ex: 111.111.111-11)
+            if (/^(\d)\1{10}$/.test(cpf)) {
+                return false;
+            }
+
+            // Lógica de validação do CPF
+            var soma = 0;
+            var peso = 10;
+            for (var i = 0; i < 9; i++) {
+                soma += parseInt(cpf.charAt(i)) * peso--;
+            }
+            var digito1 = 11 - (soma % 11);
+            if (digito1 >= 10) digito1 = 0;
+            if (digito1 != parseInt(cpf.charAt(9))) {
+                return false;
+            }
+
+            soma = 0;
+            peso = 11;
+            for (var i = 0; i < 10; i++) {
+                soma += parseInt(cpf.charAt(i)) * peso--;
+            }
+            var digito2 = 11 - (soma % 11);
+            if (digito2 >= 10) digito2 = 0;
+            return digito2 == parseInt(cpf.charAt(10));
+        }
+    </script>
+</body>
+</html>

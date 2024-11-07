@@ -17,12 +17,11 @@ public class CarrinhoDeCompras {
     }
 
     public void adicionarItem(ItemCarrinho item) {
-        for (ItemCarrinho carrinhoItem : itens) {
+        for (ItemCarrinho carrinhoItem : itens)
             if (carrinhoItem.getProduto().getId() == item.getProduto().getId()) {  // Corrige a comparação do ID
                 carrinhoItem.incrementarQuantidade();
                 return;
             }
-        }
         this.itens.add(item);
     }
 }

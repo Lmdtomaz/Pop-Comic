@@ -1,70 +1,52 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/login.css">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <title>PopComic - Login</title>
-    <meta name="author" content="PopComic"/>
-    <script src="https://kit.fontawesome.com/006642858d.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>PopComic - Login</title>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="index.html">Inicio</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="product.html">Lista de produtos</a>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-outline-light rounded" style="margin-left: 10px;" onclick="window.location.href='/contact.html'">Carrinho</button>
-                </li>
-                <li class="nav-item">
-                    <button class="btn btn-outline-danger rounded" style="margin-left: 10px;" onclick="window.location.href='/logout'">Sair</button>
-                </li>
-            </ul>
-        </div>
-    </div>
+  <div class="container">
+    <a class="navbar-brand" th:href="@{/}">Pop Comic</a>
+  </div>
 </nav>
 
 <div class="Login-Form">
-    <div class="container">
-        <div class="main-div">
-            <div class="texto-header">
-                <h2>Acesse sua conta</h2>
-                <p>Insira suas credenciais</p>
-            </div>
-            <form method="post" th:action="@{/login}" th:object="${usuario}">
+  <div class="container">
+    <div class="main-div">
+      <div class="texto-header">
+        <h2>Acesse sua conta</h2>
+        <p>Insira suas credenciais</p>
+      </div>
 
-                <div class="alert alert-danger" role="alert" th:if="${msg}">
-                    <strong th:text="${mensagem}"></strong>
-                </div>
+      <!-- Alerta de erro -->
+      <div class="alert alert-danger" role="alert" th:if="${erro}">
+        <strong th:text="${erro}"></strong>
+      </div>
 
-                <div class="form-group">
-                    <input type="text" th:field="*{email}" class="form-control" placeholder="E-mail" required>
-                </div>
-
-                <div class="form-group">
-                    <input type="password" th:field="*{senha}" class="form-control" placeholder="Senha" required>
-                </div>
-                <button type="submit" class="btn btn-login">Login</button>
-                <button type="button" class="btn btn-cadastrar" onclick="window.location.href='/cadastro'">Cadastre-se</button>
-            </form>
+      <form action="#" th:action="@{/login}" method="post">
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" class="form-control" required>
         </div>
+
+        <div class="form-group">
+          <label for="senha">Senha:</label>
+          <input type="password" id="senha" name="senha" class="form-control" required>
+        </div>
+
+        <button type="submit" class="btn btn-login btn-primary">Login</button>
+        <button type="button" class="btn btn-cadastrar btn-secondary" onclick="window.location.href='/ecommerce/cadastro'">Cadastre-se</button>
+      </form>
+
     </div>
+  </div>
 </div>
 
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

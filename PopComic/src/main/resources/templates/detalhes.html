@@ -12,7 +12,7 @@
         <h1 class="produto-nome" th:text="${produto.nome}"></h1>
         <div class="produto-carrossel">
             <div class="imagens-carrossel">
-                <!-- Exibe as imagens do produto -->
+                <!-- Exibe a imagem principal do produto -->
                 <div class="imagem-principal">
                     <img th:src="@{/ecommerce/imagem/{img}(img=${produto.imagenPrincipal})}" th:alt="${produto.nome}">
                 </div>
@@ -31,10 +31,17 @@
             <p class="produto-preco">Preço: R$ <span th:text="${produto.preco}"></span></p>
             <p class="produto-avaliacao">Avaliação: <span th:text="${produto.avaliacao}"></span> / 5</p>
         </div>
-        <form th:action="@{/ecommerce/produto/comprar/{id}(id=${produto.id})}" method="post">
-            <input type="hidden" name="redirect" value="carrinho">
+
+
+        <form th:action="@{/ecommerce/carrinho/{id}(id=${produto.id})}" method="post">
+            <input type="hidden" name="nomeProduto" th:value="${produto.nome}" />
+            <input type="hidden" name="precoProduto" th:value="${produto.preco}" />
             <button type="submit" class="btn-comprar">Adicionar ao Carrinho</button>
         </form>
+
+
+
+
     </div>
 </div>
 </body>
