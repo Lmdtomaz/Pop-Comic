@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -92,9 +92,12 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-12 text-center"> <!-- Centraliza o botão -->
-                    <button class="btn btn-lg btn-success text-uppercase" id="btnCheckout">
-                        Checkout
-                    </button>
+                    <!-- Botão para ir diretamente ao checkout -->
+                    <form th:action="@{/finalizar-pedido}" method="get">
+                        <button type="submit" class="btn btn-lg btn-success text-uppercase">
+                            Finalizar Pedido
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -133,33 +136,11 @@
     </div>
 </div>
 
-<!-- Modal de Checkout -->
-<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p>Valor Total: R$ <span id="modalTotal">0.00</span></p>
-                <p>Frete: R$ <span id="modalFrete">0.00</span></p>
-                <h6>Total Final: R$ <span id="modalTotalFinal">0.00</span></h6>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Confirmar Pedido</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Footer -->
 <footer class="py-5 bg-dark">
     <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Pop-Comic 2023</p></div>
 </footer>
+
 <script>
     $(document).ready(function() {
         function atualizarValorTotal() {
@@ -172,22 +153,6 @@
             $('#valorTotal').text(total.toFixed(2).replace('.', ','));
             return total; // Retorna o total para uso posterior
         }
-
-        $('#btnCheckout').click(function() {
-            const total = atualizarValorTotal(); // Atualiza o valor total
-
-            // Captura o valor do frete selecionado na tela
-            const frete = $('input[name="frete"]:checked').next('label').text().match(/R\$ ([0-9,.]+)/)[1].replace('.', '').replace(',', '.'); // Extrai o valor do frete
-            const totalFinal = total + parseFloat(frete); // Calcula o total final
-
-            // Atualiza os valores do modal
-            $('#modalTotal').text(total.toFixed(2).replace('.', ','));
-            $('#modalFrete').text(parseFloat(frete).toFixed(2).replace('.', ',')); // Exibe o frete corretamente
-            $('#modalTotalFinal').text(totalFinal.toFixed(2).replace('.', ','));
-
-            // Exibe o modal
-            $('#checkoutModal').modal('show');
-        });
 
         $('.quantity-right-plus, .quantity-left-minus').click(function(e) {
             e.preventDefault();

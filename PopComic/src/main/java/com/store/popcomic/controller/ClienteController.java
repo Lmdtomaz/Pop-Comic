@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -32,8 +34,25 @@ public class ClienteController {
             model.addAttribute("erro", "CPF inválido.");
             return "cadastro"; // Retorna ao formulário de cadastro com erro
         }
+
+        // Verifica se já existe um cliente com o mesmo CPF
+        Optional<Cliente> clienteExistente = clienteRepository.findById(cliente.getCpf());
+        if (clienteExistente.isPresent()) {
+            model.addAttribute("erro", "Já existe um cliente cadastrado com este CPF.");
+            return "cadastro"; // Retorna ao formulário de cadastro com erro
+        }
+
         clienteRepository.save(cliente);
         return "redirect:/"; // Redireciona para a página inicial após salvar
+    }
+    // Método para buscar endereço pelo CEP
+    @GetMapping("/buscarEndereco/{cep}")
+    @ResponseBody
+    public Map<String, String> buscarEndereco(@PathVariable String cep) {
+        String url = "https://viacep.com.br/ws/" + cep + "/json/";
+        RestTemplate restTemplate = new RestTemplate();
+        Map<String, String> endereco = restTemplate.getForObject(url, Map.class);
+        return endereco;
     }
 
     // Listar todos os clientes

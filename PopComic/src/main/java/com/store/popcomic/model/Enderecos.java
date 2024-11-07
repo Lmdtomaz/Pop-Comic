@@ -1,3 +1,4 @@
+
 package com.store.popcomic.model;
 
 import jakarta.persistence.*;
@@ -23,6 +24,9 @@ public class Enderecos {
     @ManyToOne
     @JoinColumn(name = "cliente_cpf")
     private Cliente cliente;
+
+
+
 
 // 5 enderecos do cpf 123
 }
