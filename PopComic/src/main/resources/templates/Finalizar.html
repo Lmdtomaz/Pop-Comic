@@ -17,6 +17,7 @@
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse justify-content-end" id="navbarsExampleDefault">
       <ul class="navbar-nav m-auto">
         <li class="nav-item m-auto">
@@ -38,41 +39,110 @@
 
 <section class="jumbotron text-center">
   <div class="container">
-    <h1 class="jumbotron-heading">Finalizar Compra</h1>
+    <h1 class="jumbotron-heading">Finalizar</h1>
   </div>
 </section>
 
 <div class="container mb-4">
-  <div class="table-responsive">
-    <table class="table table -striped">
-      <thead>
-      <tr>
-        <th scope="col">Imagem</th>
-        <th scope="col">Produto</th>
-        <th scope="col" class="text-right">Preço</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="compra : ${carrinho}">
-        <td th:text="${compra.imagemProduto}">Imagem Produto</td>
-        <td th:text="${compra.nomeProduto}">Nome do Produto</td>
-        <td th:text="${compra.precoProduto}">Preço do Produto</td>
-      </tr>
-      </tbody>
-    </table>
-    <div class="total-container text-right">
-      <h5>Total: R$ <span id="valorTotal">0.00</span></h5>
+  <div class="row">
+    <div class="col-6">
+      <select class="form-control" id="opcaoPagamento">
+        <option value="Boleto">Boleto</option>
+        <option value="Cartão de crédito">Cartão de crédito</option>
+        <option value="PIX">PIX</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Campos do Cartão de Crédito -->
+  <div id="camposCartao" class="row mt-3" style="display: none;">
+    <div class="col-12">
+      <h5>Informações do Cartão de Crédito</h5>
+      <div class="form-group">
+        <label for="numeroCartao">Número do Cartão</label>
+        <input type="number" class="form-control" id="numeroCartao" placeholder="Número do cartão" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="dataVencimento">Data de Vencimento (MM/AA)</label>
+          <input type="month" class="form-control" id="dataVencimento" min="2024-01" required>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for="codigoSeguranca">Código de Segurança</label>
+          <input type="text" class="form-control" id="codigoSeguranca" placeholder="CVV" required pattern="^\d{3}$" maxlength="3">
+        </div>
+
+
+      </div>
+      <div class="form-group">
+        <label for="nomeTitular">Nome Completo do Titular</label>
+        <input type="text" class="form-control" id="nomeTitular" placeholder="Nome completo" required>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-12">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col">Imagem</th>
+          <th scope="col">Produto</th>
+          <th scope="col" class="text-right">Preço</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="compra : ${carrinho}">
+          <td th:text="${compra.imagemProduto}">Imagem Produto</td>
+          <td th:text="${compra.nomeProduto}">Nome do Produto</td>
+          <td th:text="${compra.precoProduto}">Preço do Produto</td>
+        </tr>
+        </tbody>
+      </table>
+
+      <div class="total-container text-right">
+        <h5>Total: R$ <span id="valorTotal">0.00</span></h5>
+      </div>
     </div>
   </div>
   <div class="col mb-2">
     <div class="row">
-      <div class="col-12 text-center">
+      <div class="col-12 text-center"> <!-- Centraliza o botão -->
         <button class="btn btn-lg btn-success text-uppercase" id="btnCheckout">
           Finalizar Compra
         </button>
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal de Checkout -->
+<div class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Valor Total: R$ <span id="modalTotal">0.00</span></p>
+        <p>Frete: R$ <span id="modalFrete">0.00</span></p>
+        <h6>Total Final: R$ <span id="modalTotalFinal">0.00</span></h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary">Confirmar Pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Mensagem de erro -->
+<div id="mensagemErro" class="alert alert-danger" style="display: none; text-align: center;">
+  <strong>Preencha os dados de pagamento.</strong>
 </div>
 
 <!-- Footer -->
@@ -91,6 +161,47 @@
             $('#valorTotal').text(total.toFixed(2).replace('.', ','));
             return total; // Retorna o total para uso posterior
         }
+
+        $('#opcaoPagamento').change(function() {
+            if ($(this).val() === 'Cartão de crédito') {
+                $('#camposCartao').show(); // Mostra os campos do cartão de crédito
+            } else {
+                $('#camposCartao').hide(); // Esconde os campos do cartão de crédito
+            }
+        });
+
+        $('#btnCheckout').click(function() {
+            // Limpa mensagem de erro anterior
+            $('#mensagemErro').hide();
+
+            // Verifica se os campos estão preenchidos
+            if ($('#opcaoPagamento').val() === 'Cartão de crédito') {
+                const numeroCartao = $('#numeroCartao').val().trim();
+                const dataVencimento = $('#dataVencimento').val().trim();
+                const codigoSeguranca = $('#codigoSeguranca').val().trim();
+                const nomeTitular = $('#nomeTitular').val().trim();
+
+                if (!numeroCartao || !dataVencimento || !codigoSeguranca || !nomeTitular) {
+                    $('#mensagemErro').show(); // Exibe a mensagem de erro
+                    return; // Não prossegue se houver erro
+                }
+            }
+
+            const total = atualizarValorTotal(); // Atualiza o valor total
+
+            // Captura o valor do frete selecionado na tela (se houver)
+            const frete = $('input[name="frete"]:checked').next('label').text().match(/R\$ ([0-9,.]+)/);
+            const freteValor = frete ? parseFloat(frete[1].replace('.', '').replace(',', '.')) : 0; // Se houver frete, extrai o valor
+            const totalFinal = total + freteValor; // Calcula o total final
+
+            // Atualiza os valores do modal
+            $('#modalTotal').text(total.toFixed(2).replace('.', ','));
+            $('#modalFrete').text(freteValor.toFixed(2).replace('.', ',')); // Exibe o frete corretamente
+            $('#modalTotalFinal').text(totalFinal.toFixed(2).replace('.', ','));
+
+            // Exibe o modal
+            $('#checkoutModal').modal('show');
+        });
 
         atualizarValorTotal(); // Atualiza o total no carregamento
     });

@@ -20,6 +20,8 @@ public class LoginController {
     @Autowired
     private ClienteRepository clienteRepository;
 
+
+
     @GetMapping
     public ModelAndView novoClienteForm() {
         ModelAndView mv = new ModelAndView("login"); // "login" deve corresponder ao nome do arquivo login.html
@@ -39,7 +41,7 @@ public class LoginController {
             return new ModelAndView("redirect:/"); // Aqui é onde você redireciona após o login.
         } else {
             ModelAndView mv = new ModelAndView("login");
-            System.out.println("Cliente NAO Logado");
+            System.out.println("Cliente NÃO Logado");
             mv.addObject("erro", "Email ou senha inválidos");
             return mv;
         }
@@ -48,33 +50,14 @@ public class LoginController {
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate(); // Invalida a sessão
-        return "redirect:/login"; // Redireciona para a página de login após logout
+        return "redirect:/"; // Redireciona para a página de login após logout
     }
+
     // Método para criar uma nova sessão
     @GetMapping("/createSession")
     public String createSession(HttpSession session) {
         // Define um atributo de sessão (exemplo: nome de usuário)
         session.setAttribute("usuarioLogado", "NomeDoUsuario");
         return "Sessão criada com ID: " + session.getId();
-    }
-
-    // Método para obter um atributo da sessão
-    @GetMapping("/getSession")
-    public String getSession(HttpSession session) {
-        // Obtém o atributo da sessão (nome de usuário)
-        String usuarioLogado = (String) session.getAttribute("usuarioLogado");
-
-        if (usuarioLogado == null) {
-            return "Nenhuma sessão encontrada!";
-        }
-
-        return "Sessão encontrada com usuário: " + usuarioLogado;
-    }
-
-    // Método para invalidar a sessão
-    @GetMapping("/invalidateSession")
-    public String invalidateSession(HttpSession session) {
-        session.invalidate(); // Invalida a sessão
-        return "Sessão invalidada!";
     }
 }

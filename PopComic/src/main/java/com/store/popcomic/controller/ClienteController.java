@@ -35,7 +35,6 @@ public class ClienteController {
             return "cadastro"; // Retorna ao formulário de cadastro com erro
         }
 
-        // Verifica se já existe um cliente com o mesmo CPF
         Optional<Cliente> clienteExistente = clienteRepository.findById(cliente.getCpf());
         if (clienteExistente.isPresent()) {
             model.addAttribute("erro", "Já existe um cliente cadastrado com este CPF.");
@@ -45,6 +44,7 @@ public class ClienteController {
         clienteRepository.save(cliente);
         return "redirect:/"; // Redireciona para a página inicial após salvar
     }
+
     // Método para buscar endereço pelo CEP
     @GetMapping("/buscarEndereco/{cep}")
     @ResponseBody
