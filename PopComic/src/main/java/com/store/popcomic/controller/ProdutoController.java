@@ -27,10 +27,11 @@ public class ProdutoController {
 
     @GetMapping("adm/produto/cadastrar")
     public ModelAndView cadastrar(Produto produto){
-        ModelAndView mv = new ModelAndView("adm/produtos/cadastro");
+        ModelAndView mv = new ModelAndView("adm/produtos/produto");
         mv.addObject("produto", produto);
         return mv;
     }
+
         @GetMapping("adm/produto/listar")
     public ModelAndView listar(){
         ModelAndView mv = new ModelAndView("adm/produtos/lista");
