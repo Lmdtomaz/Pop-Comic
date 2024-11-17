@@ -10814,9 +10814,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 
-  .carousel-item {
-      display: none; /* Isso ocultaria os itens do carrossel */
-  }
+.carousel-item.active {
+    display: block; /* Isso deve ser adicionado para mostrar o item ativo */
+}
+
 .carousel-control {
     color: white;
     width: 15%;
@@ -10871,5 +10872,12 @@ textarea.form-control-lg {
     filter: invert(1) grayscale(100);
 }
 
+#carouselExampleFade .carousel-inner {
+    height: 1000px;  /* Ajuste conforme necessário */
+}
 
+#carouselExampleFade .carousel-item img {
+    object-fit: cover; /* Faz com que a imagem se ajuste sem distorcer, cobrindo todo o espaço */
+    height: 50%;
+    width: 50%;
 }

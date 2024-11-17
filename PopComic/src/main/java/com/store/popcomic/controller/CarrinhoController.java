@@ -86,4 +86,34 @@ public class CarrinhoController {
         modelAndView.addObject("freteSelecionado", opcoesFrete.get(tipoFrete)); // Adiciona o valor do frete selecionado
         return modelAndView;
     }
+
+    @GetMapping("/resumo-pedido")
+    public ModelAndView mostrarResumoPedido(String tipoFrete) {
+        ModelAndView modelAndView = new ModelAndView("resumo-pedido");
+
+        // Adiciona a lista de compras ao modelo
+        modelAndView.addObject("carrinho", carrinho);
+
+        // Calcula o total do pedido
+        double totalPedido = 0;
+        for (Compra compra : carrinho) {
+            totalPedido += compra.getPrecoProduto() * compra.getQuantidade();
+        }
+
+        // Inclui o valor do frete se houver um tipo de frete selecionado
+        double valorFrete = 0;
+        if (tipoFrete != null && opcoesFrete.containsKey(tipoFrete)) {
+            valorFrete = opcoesFrete.get(tipoFrete);
+        }
+
+        // Calcula o valor final (total do pedido + frete)
+        double totalFinal = totalPedido + valorFrete;
+
+        // Adiciona as informações ao modelo
+        modelAndView.addObject("totalPedido", totalPedido);
+        modelAndView.addObject("valorFrete", valorFrete);
+        modelAndView.addObject("totalFinal", totalFinal);
+
+        return modelAndView;
+    }
 }

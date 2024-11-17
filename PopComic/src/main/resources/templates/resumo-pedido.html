@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resumo do Pedido</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Simple Ecommerce</a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="/">Home</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/carrinho">Carrinho</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/resumo-pedido">Resumo Pedido</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <h2 class="text-center">Resumo do Pedido</h2>
+
+  <!-- Tabela de produtos no pedido -->
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">Imagem</th>
+      <th scope="col">Produto</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Preço Unitário</th>
+      <th scope="col">Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="compra : ${carrinho}">
+      <td><img th:src="@{${compra.imagemProduto}}" alt="Imagem do Produto" style="width: 50px; height: auto;"></td>
+      <td th:text="${compra.nomeProduto}">Produto</td>
+      <td th:text="${compra.quantidade}">Quantidade</td>
+      <td th:text="${compra.precoProduto}">Preço Unitário</td>
+      <td th:text="${compra.precoProduto * compra.quantidade}">Subtotal</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!-- Total do pedido -->
+  <div class="row">
+    <div class="col-12 text-right">
+      <h4>Total do Pedido: R$ <span th:text="${totalPedido}">0.00</span></h4>
+    </div>
+  </div>
+
+  <!-- Valor do frete -->
+  <div class="row">
+    <div class="col-12 text-right">
+      <h4>Frete: R$ <span th:text="${valorFrete}">0.00</span></h4>
+    </div>
+  </div>
+
+  <!-- Total final -->
+  <div class="row">
+    <div class="col-12 text-right">
+      <h4>Total Final: R$ <span th:text="${totalFinal}">0.00</span></h4>
+    </div>
+  </div>
+
+  <!-- Botão de Finalizar Pedido -->
+  <div class="row mt-4">
+    <div class="col-12 text-center">
+      <form action="/finalizar-pedido" method="get">
+        <button type="submit" class="btn btn-lg btn-success">Finalizar Pedido</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

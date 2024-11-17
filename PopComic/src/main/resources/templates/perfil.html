@@ -32,7 +32,7 @@
       </ul>
       <form class="d-flex me-3">
         <div th:if="${session.user != null}">
-          <img src="user.png" alt="User" width="30" height="30" class="me-2" />
+          <img src="../static/imagens/user.png" alt="User" width="30" height="30" class="me-2" />
         </div>
         <div th:unless="${session.user != null}">
           <a class="btn btn-outline-dark me-2" href="/login" data-bs-toggle="modal">Login</a>

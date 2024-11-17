@@ -23,6 +23,8 @@ public class DetalhesController {
     @Autowired
     private CarrinhoDeCompras carrinhoDeCompras;
 
+
+
     @GetMapping("/produto/detalhes/{id}")
     public ModelAndView visualizarProdutoDetalhes(@PathVariable("id") Long id) {
         Optional<Produto> produtoOpt = produtoRepository.findById(id);

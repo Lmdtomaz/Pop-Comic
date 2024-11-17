@@ -1,5 +1,3 @@
-
-
 package com.store.popcomic.controller;
 
 import jakarta.servlet.http.HttpSession;
@@ -16,7 +14,7 @@ public class ControllerCheckout {
         if (session.getAttribute("usuarioLogado") == null){
             return new ModelAndView("redirect:/login");
         }
-        return new ModelAndView("Finalizar"); //Substituir com a pagina que da continuidade ao checkout
+        return new ModelAndView("resumo-pedido"); //Substituir com a pagina que da continuidade ao checkout
     }
 
 }

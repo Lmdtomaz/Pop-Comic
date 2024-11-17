@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -38,9 +39,6 @@
 
             <!-- Login / Sign up buttons or User icon -->
             <form class="d-flex me-3">
-                <div th:if="${session.user != null}">
-                    <img src="user.png" alt="User" width="30" height="30" class="me-2" />
-                </div>
                 <div th:unless="${session.user != null}">
                     <a class="btn btn-outline-dark me-2" href="/login" data-bs-toggle="modal">Login</a>
                     <a class="btn btn-outline-dark" href="/ecommerce/cadastro">Criar Conta</a>
@@ -123,18 +121,17 @@
         </div>
     </div>
 </header>
-
 <!-- Carousel -->
 <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="pokemon1.jpg" class="d-block w-100" alt="1">
+            <img src="/imagens/pokemon1.jpg" class="d-block w-100" alt="1">
         </div>
         <div class="carousel-item">
-            <img src="pokemon2.jpg" class="d-block w-100" alt="2">
+            <img src="/imagens/pokemon2.jpg" class="d-block w-100" alt="2">
         </div>
         <div class="carousel-item">
-            <img src="pokemon3.jpg" class="d-block w-100" alt="3">
+            <img src="/imagens/pokemon3.jpg" class="d-block w-100" alt="3">
         </div>
     </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
@@ -147,6 +144,9 @@
     </button>
 </div>
 
+<!-- Scripts do Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-ovw4s0yW9W23Z5B9Fz6Ow6V5sm7aRybw4uXcKjUPg6hMOno4pqf2ATwwPBU9gjvq" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+G3HURANzPqa0Qv+V6pW9n0X92gB6cEd70S8" crossorigin="anonymous"></script>
 <!-- Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -184,8 +184,6 @@
     </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-ovw4s0yW9W23Z5B9Fz6Ow6V5sm7aRybw4uXcKjUPg6hMOno4pqf2ATwwPBU9gjvq" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+G3HURANzPqa0Qv+V6pW9n0X92gB6cEd70S8" crossorigin="anonymous"></script>
 </body>
 </html>
 

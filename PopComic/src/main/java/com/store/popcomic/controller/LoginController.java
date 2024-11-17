@@ -38,7 +38,7 @@ public class LoginController {
             System.out.println("Cliente Logado");
             System.out.println("CPF armazenado na sessão: " + session.getAttribute("userCpf"));
 
-            return new ModelAndView("redirect:/"); // Aqui é onde você redireciona após o login.
+            return new ModelAndView("redirect:/homeLogada"); // Aqui é onde você redireciona após o login.
         } else {
             ModelAndView mv = new ModelAndView("login");
             System.out.println("Cliente NÃO Logado");
