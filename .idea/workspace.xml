@@ -5,28 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="752807f3-c6a1-4364-92de-d0d8db1a50b4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/Pop-Comic.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/PagamentoController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/pagamento.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/static/css/resumo.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/pagamento.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/data/test.trace.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ClienteController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ClienteController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/EnderecoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/EnderecoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Endereco.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Endereco.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ClienteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ClienteRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/cadastro.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/cadastro.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/perfil.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.mv.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -60,20 +40,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Backoffice.executor": "Run",
-    "DefaultHtmlFileTemplate": "HTML File",
-    "Maven.PopComic [org.apache.tomcat.maven:tomcat7-maven-plugin:2.1:run].executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "Merging GustavoSpring",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/win/OneDrive/Área de Trabalho/ProjetoInt4/Pop-Comic"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Backoffice.executor&quot;: &quot;Run&quot;,
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Maven.PopComic [org.apache.tomcat.maven:tomcat7-maven-plugin:2.1:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging GustavoSpring&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/win/OneDrive/Área de Trabalho/ProjetoInt4/Pop-Comic&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Application.PopcomicApplication">
     <configuration name="Backoffice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.com.popcomic.model.Backoffice" />
