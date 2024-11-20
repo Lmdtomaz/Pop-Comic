@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<link rel="stylesheet" href="/css/backoffice.css">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<header>
+    <h1>Bem-vindo ao Painel Administrativo</h1>
+    <p>Usuário logado: <span th:text="${usuario.nome}"></span></p>
+    <p>Função: <span th:text="${usuario.grupo}"></span></p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="/ecommerce/adm/produto/listar">Listar Produtos</a></li>
+        <li><a href="/ecommerce/adm/produto/cadastrar">Cadastrar Produto</a></li>
+        <li><a href="/ecommerce/adm/usuarios/listar">Gerenciar Usuários</a></li>
+        <li><a href="/">Sair</a></li>
+        <h2>kkk</h2>
+    </ul>
+</nav>
+
+<main>
+    <p>Escolha uma das opções acima para gerenciar o sistema.</p>
+</main>
+</body>
+</html>
