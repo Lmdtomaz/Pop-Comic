@@ -1,0 +1,109 @@
+/* Estilo Geral */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar */
+.navbar {
+    background-color: #343a40;
+}
+
+.navbar .navbar-brand {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.navbar .nav-link {
+    color: #fff;
+}
+
+.navbar .nav-link:hover {
+    color: #ccc;
+}
+
+.navbar .navbar-nav .active .nav-link {
+    color: #00d1b2;
+}
+
+/* Tabela de Resumo do Pedido */
+.container {
+    margin-top: 30px;
+}
+
+h2 {
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.table {
+    margin-bottom: 30px;
+}
+
+.table th {
+    background-color: #343a40;
+    color: #fff;
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.table img {
+    width: 50px;
+    height: auto;
+}
+
+/* Total do Pedido e Pagamento */
+.row {
+    margin-top: 20px;
+}
+
+h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #343a40;
+}
+
+h4 span {
+    font-weight: 700;
+    color: #00d1b2;
+}
+
+/* Botão de Finalizar Pedido */
+.btn-success {
+    background-color: #00d1b2;
+    border-color: #00d1b2;
+    font-size: 1.1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.btn-success:hover {
+    background-color: #00b39f;
+    border-color: #00b39f;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 20px;
+}
+
+.mt-5 {
+    margin-top: 40px;
+}
+
+.text-uppercase {
+    text-transform: uppercase;
+}

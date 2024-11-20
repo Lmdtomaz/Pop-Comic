@@ -74,11 +74,12 @@
             <p><strong>Email:</strong> <span th:text="${usuario.email}"></span></p>
             <p><strong>Genero:</strong> <span th:text="${usuario.genero}"></span></p>
             <p><strong>Data de Nascimento:</strong> <span th:text="${usuario.dataNascimento}"></span></p>
-            <p><strong>Endereço:</strong> <span th:text="${usuario.MainEndereco}"></span></p>
+            <p><strong>Endereço:</strong> <span th:text="${usuario.MainEnderecoFaturamento}"></span></p>
           </div>
           <div class="card-footer text-end">
             <a class="btn btn-primary" th:href="@{/ecommerce/usuario/editar/{cpf}(cpf=${usuario.cpf})}">Editar Perfil</a>
-            <a class="btn btn-secondary" th:href="@{/ecommerce/usuario/endereco}">Adicionar Endereço</a>
+            <a class="btn btn-secondary" th:href="@{/perfil/endereco/{cpf}(cpf=${usuario.cpf})}">Adicionar Endereço</a>
+
             <a class="btn btn-outline-danger" th:href="@{/login/logout}">Sair</a>
           </div>
         </div>

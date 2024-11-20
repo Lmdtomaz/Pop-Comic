@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -36,47 +36,74 @@
       <input type="text" class="form-control" id="genero" name="genero">
     </div>
     <div class="mb-3">
-      <label for="Maincep" class="form-label">CEP</label>
-      <input type="text" class="form-control" id="Maincep" name="Maincep" required>
-    </div>
-    <div class="mb-3">
-      <label for="MainEndereco" class="form-label">Logradouro</label>
-      <input type="text" class="form-control" id="MainEndereco" name="MainEndereco">
-    </div>
-    <div class="mb-3">
-      <label for="MainNumeroResidencia" class="form-label">Número</label>
-      <input type="number" class="form-control" id="MainNumeroResidencia" name="MainNumeroResidencia">
-    </div>
-    <div class="mb-3">
-      <label for="MainInfosAdicionaisResidencia" class="form-label">Informações Adicionais</label>
-      <input type="text" class="form-control" id="MainInfosAdicionaisResidencia" name="MainInfosAdicionaisResidencia">
-    </div>
-    <div class="mb-3">
       <label for="senha" class="form-label">Senha</label>
       <input type="password" class="form-control" id="senha" name="senha" required>
     </div>
 
+
+    <h2>Endereco Faturamento</h2>
+
+
+
+    <div class="mb-3">
+      <label for="Maincep" class="form-label">CEP</label>
+      <input type="text" class="form-control" id="Maincep" name="Maincep" required>
+    </div>
+    <div class="mb-3">
+      <label for="MainEnderecoFaturamento" class="form-label">Logradouro</label>
+      <input type="text" class="form-control" id="MainEnderecoFaturamento" name="MainEnderecoFaturamento">
+    </div>
+    <div class="mb-3">
+      <label for="MainCidadeFaturamento" class="form-label">Cidade</label>
+      <input type="text" class="form-control" id="MainCidadeFaturamento" name="MainCidadeFaturamento">
+    </div>
+
+    <div class="mb-3">
+      <label for="MainEstadoFaturamento" class="form-label">Estado</label>
+      <input type="text" class="form-control" id="MainEstadoFaturamento" name="MainEstadoFaturamento">
+    </div>
+
+    <div class="mb-3">
+      <label for="MainBairroFaturamento" class="form-label">Bairro</label>
+      <input type="text" class="form-control" id="MainBairroFaturamento" name="MainBairroFaturamento" required>
+    </div>
+
+    <div class="mb-3">
+      <label for="MainNumeroResidenciaFaturamento" class="form-label">Número</label>
+      <input type="number" class="form-control" id="MainNumeroResidenciaFaturamento" name="MainNumeroResidenciaFaturamento">
+    </div>
+    <div class="mb-3">
+      <label for="MainInfosAdicionaisResidenciaFaturamento" class="form-label">Informações Adicionais</label>
+      <input type="text" class="form-control" id="MainInfosAdicionaisResidenciaFaturamento" name="MainInfosAdicionaisResidenciaFaturamento">
+    </div>
     <script>
-      document.getElementById("Maincep").addEventListener("blur", function() {
-          var cep = this.value.replace(/\D/g, '');
-          if (cep.length === 8) {
-              fetch(`/ecommerce/buscarEndereco/${cep}`)
-                  .then(response => {
-                      if (!response.ok) {
-                          throw new Error('Network response was not ok');
-                      }
-                      return response.json();
-                  })
-                  .then(data => {
-                      if (data.erro) {
-                          alert("CEP não encontrado.");
-                      } else {
-                          document.getElementById("MainEndereco").value = data.logradouro || "";
-                      }
-                  })
-                  .catch(error => console.error("Erro na busca do endereço:", error));
-          }
-      });
+     document.getElementById("Maincep").addEventListener("blur", function () {
+      var cep = this.value.replace(/\D/g, '');
+      if (cep.length === 8) {
+          fetch(`/ecommerce/buscarEndereco/${cep}`)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Erro ao buscar o CEP.');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  if (data.erro) {
+                      alert("CEP não encontrado.");
+                  } else {
+                      // Preenche os campos do formulário com os valores retornados
+                      document.getElementById("MainEnderecoFaturamento").value = data.logradouro || "";
+                      document.getElementById("MainCidadeFaturamento").value = data.cidade || "";
+                      document.getElementById("MainEstadoFaturamento").value = data.estado || "";
+                      document.getElementById("MainBairroFaturamento").value = data.bairro || "";
+                  }
+              })
+              .catch(error => {
+                  console.error("Erro na busca do endereço:", error);
+                  alert("Erro ao buscar o CEP. Tente novamente.");
+              });
+      }
+  });
 
       document.getElementById("cadastro-form").addEventListener("submit", function(event) {
           var cpf = document.getElementById("cpf").value;

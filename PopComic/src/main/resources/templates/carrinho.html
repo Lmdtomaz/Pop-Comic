@@ -93,7 +93,7 @@
             <div class="row">
                 <div class="col-12 text-center"> <!-- Centraliza o botão -->
                     <!-- Botão para ir diretamente ao checkout -->
-                    <form th:action="@{finalizar-pedido}" method="get">
+                    <form th:action="@{/pagamento}" method="get">
                         <button type="submit" class="btn btn-lg btn-success text-uppercase">
                             Finalizar Pedido
                         </button>
@@ -108,7 +108,7 @@
     <div class="row">
         <div class="col-12">
             <h5>Calcular Frete</h5>
-            <form id="formFrete" method="post" th:action="@{/carrinho/buscarFrete}">
+            <form id="formFrete" method="post" th:action="@{/resumo-pedido}">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Digite seu CEP" name="cep" required>
                     <div class="input-group-append">
@@ -123,14 +123,21 @@
         <div class="col-12">
             <h5>Opções de Frete</h5>
             <div>
-                <ul>
-                    <li th:each="entry : ${opcoesFrete}">
-                        <input type="radio" th:value="${entry.key}" name="frete" id="frete-${entry.key}" required>
-                        <label th:for="'frete-' + ${entry.key}">
-                            <span th:text="${entry.key} + ' - R$ ' + ${entry.value}"></span>
-                        </label>
-                    </li>
-                </ul>
+                <form method="POST" th:action="@{/carrinho/selecionarFrete}">
+                    <ul>
+                        <li th:each="entry : ${opcoesFrete}">
+                            <input type="radio" th:value="${entry.key}" name="tipoFrete" id="frete-${entry.key}" required
+                                   th:checked="${session.tipoFrete == entry.key}">
+                            <label th:for="'frete-' + ${entry.key}">
+                                <span th:text="${entry.key} + ' - R$ ' + ${entry.value}"></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-primary mt-2">Selecionar Frete</button>
+                </form>
+
+
+
             </div>
         </div>
     </div>

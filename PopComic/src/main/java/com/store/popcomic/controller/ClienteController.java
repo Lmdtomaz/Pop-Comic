@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -44,15 +45,30 @@ public class ClienteController {
         clienteRepository.save(cliente);
         return "redirect:/"; // Redireciona para a página inicial após salvar
     }
-
-    // Método para buscar endereço pelo CEP
     @GetMapping("/buscarEndereco/{cep}")
     @ResponseBody
     public Map<String, String> buscarEndereco(@PathVariable String cep) {
         String url = "https://viacep.com.br/ws/" + cep + "/json/";
         RestTemplate restTemplate = new RestTemplate();
-        Map<String, String> endereco = restTemplate.getForObject(url, Map.class);
-        return endereco;
+
+        try {
+            Map<String, Object> response = restTemplate.getForObject(url, Map.class);
+
+            // Verifica se o CEP é válido
+            if (response != null && response.containsKey("erro") && (boolean) response.get("erro")) {
+                throw new RuntimeException("CEP não encontrado.");
+            }
+
+            // Extrai os campos necessários
+            Map<String, String> endereco = new HashMap<>();
+            endereco.put("logradouro", (String) response.get("logradouro"));
+            endereco.put("cidade", (String) response.get("localidade"));
+            endereco.put("estado", (String) response.get("uf"));
+
+            return endereco;
+        } catch (Exception e) {
+            throw new RuntimeException("Erro ao buscar o endereço.", e);
+        }
     }
 
     // Listar todos os clientes
