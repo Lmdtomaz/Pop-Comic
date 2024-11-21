@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pagamento</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/pagamento.css"> <!-- Inclui o arquivo CSS personalizado -->
+  <link rel="stylesheet" href="/css/pagamento.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
@@ -16,41 +16,41 @@
     <div class="mb-3">
       <label for="opcaoPagamento" class="form-label">Escolha a Forma de Pagamento</label>
       <select class="form-select" id="opcaoPagamento" name="opcaoPagamento" required>
-        <option value="Credito" th:selected="${opcaoPagamento == 'Credito'}">Cartão de Crédito</option>
-        <option value="Boleto" th:selected="${opcaoPagamento == 'Boleto'}">Boleto</option>
-        <option value="PIX" th:selected="${opcaoPagamento == 'PIX'}">PIX</option>
+        <option value="Credito">Cartão de Crédito</option>
+        <option value="Boleto">Boleto</option>
+        <option value="PIX">PIX</option>
       </select>
     </div>
 
     <!-- Campos para Cartão de Crédito -->
-    <div id="creditoCampos" class="pagamento-opcao">
+    <div id="creditoCampos" class="pagamento-opcao" style="display: none;">
       <h4>Pagamento com Cartão de Crédito</h4>
       <div class="mb-3">
         <label for="nome" class="form-label">Nome Completo</label>
-        <input type="text" class="form-control" id="nome" name="nome" required>
+        <input type="text" class="form-control" id="nome" name="nome">
       </div>
       <div class="mb-3">
         <label for="numeroCartao" class="form-label">Número do Cartão</label>
-        <input type="text" class="form-control" id="numeroCartao" name="numeroCartao" maxlength="16" pattern="\d{16}" title="O número do cartão deve conter exatamente 16 dígitos." required>
+        <input type="text" class="form-control" id="numeroCartao" name="numeroCartao" maxlength="16" pattern="\d{16}" title="O número do cartão deve conter exatamente 16 dígitos.">
       </div>
       <div class="mb-3">
         <label for="validade" class="form-label">Data de Validade</label>
-        <input type="month" class="form-control" id="validade" name="validade" required>
+        <input type="month" class="form-control" id="validade" name="validade">
       </div>
       <div class="mb-3">
         <label for="codigoSeguranca" class="form-label">Código de Segurança</label>
-        <input type="text" class="form-control" id="codigoSeguranca" name="codigoSeguranca" maxlength="3" pattern="\d{3}" title="O código de segurança deve conter exatamente 3 dígitos." required>
+        <input type="text" class="form-control" id="codigoSeguranca" name="codigoSeguranca" maxlength="3" pattern="\d{3}" title="O código de segurança deve conter exatamente 3 dígitos.">
       </div>
     </div>
 
     <!-- Campos para Boleto -->
-    <div id="boletoCampos" class="pagamento-opcao">
+    <div id="boletoCampos" class="pagamento-opcao" style="display: none;">
       <h4>Pagamento com Boleto</h4>
       <p>Gerar boleto bancário para pagamento.</p>
     </div>
 
     <!-- Campos para PIX -->
-    <div id="pixCampos" class="pagamento-opcao">
+    <div id="pixCampos" class="pagamento-opcao" style="display: none;">
       <h4>Pagamento via PIX</h4>
       <p>Realize o pagamento via QR Code ou chave PIX.</p>
     </div>
@@ -63,33 +63,29 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        // Exibir os campos de pagamento corretos conforme a seleção
-        $('#opcaoPagamento').on('change', function() {
+    $(document).ready(function () {
+        // Exibir os campos de pagamento conforme a seleção
+        $('#opcaoPagamento').on('change', function () {
             var opcao = $(this).val();
-            // Ocultar todos os campos de pagamento
-            $('.pagamento-opcao').hide();
-
+            $('.pagamento-opcao').hide(); // Oculta todos os campos inicialmente
             if (opcao === 'Credito') {
-                $('#creditoCampos').show();
+                $('#creditoCampos').show(); // Exibe os campos de crédito
             } else if (opcao === 'Boleto') {
-                $('#boletoCampos').show();
+                $('#boletoCampos').show(); // Exibe a mensagem do boleto
             } else if (opcao === 'PIX') {
-                $('#pixCampos').show();
+                $('#pixCampos').show(); // Exibe a mensagem do PIX
             }
         });
 
-        // Garante que os campos sejam exibidos conforme a seleção ao carregar a página
-        var opcaoPagamentoInicial = $('#opcaoPagamento').val();
-        if (opcaoPagamentoInicial) {
-            $('#opcaoPagamento').trigger('change');
-        }
+        // Garante que os campos corretos sejam exibidos ao carregar a página
+        $('#opcaoPagamento').trigger('change');
 
-        // Validação antes de submeter o formulário
-        $('#formPagamento').on('submit', function(event) {
+        // Validação no envio do formulário
+        $('#formPagamento').on('submit', function (event) {
             var opcaoPagamento = $('#opcaoPagamento').val();
 
             if (opcaoPagamento === 'Credito') {
+                // Valida campos do cartão
                 var nome = $('#nome').val();
                 var numeroCartao = $('#numeroCartao').val();
                 var validade = $('#validade').val();
@@ -100,20 +96,9 @@
                     event.preventDefault();
                     return false;
                 }
-
-                if (!/^\d{16}$/.test(numeroCartao)) {
-                    alert("O número do cartão deve conter exatamente 16 dígitos.");
-                    event.preventDefault();
-                    return false;
-                }
-
-                if (!/^\d{3}$/.test(codigoSeguranca)) {
-                    alert("O código de segurança deve conter exatamente 3 dígitos.");
-                    event.preventDefault();
-                    return false;
-                }
             }
 
+            // Para PIX ou Boleto, não há validação adicional
             return true;
         });
     });

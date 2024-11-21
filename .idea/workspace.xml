@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="752807f3-c6a1-4364-92de-d0d8db1a50b4" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/HistoricoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/HistoricoController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Compra.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Compra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Historico.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Historico.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ProdutoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ProdutoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/cadastro.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/cadastro.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/pagamento.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/pagamento.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/test.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.trace.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +27,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -54,6 +65,11 @@
     &quot;last_opened_file_path&quot;: &quot;C:/Users/win/OneDrive/Área de Trabalho/ProjetoInt4/Pop-Comic&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.store.popcomic.controller" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.PopcomicApplication">
     <configuration name="Backoffice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="br.com.popcomic.model.Backoffice" />

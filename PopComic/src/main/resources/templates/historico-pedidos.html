@@ -1,0 +1,36 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Histórico de Pedidos</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<h1>Histórico de Pedidos</h1>-->
+<!--<table>-->
+<!--  <thead>-->
+<!--  <tr>-->
+<!--    <th>ID</th>-->
+<!--    <th>Usuário</th>-->
+<!--    <th>Total</th>-->
+<!--    <th>Frete</th>-->
+<!--    <th>Total Final</th>-->
+<!--    <th>Itens</th>-->
+<!--  </tr>-->
+<!--  </thead>-->
+<!--  <tbody>-->
+<!--  <tr th:each="pedido : ${pedidos}">-->
+<!--    <td th:text="${pedido.id}"></td>-->
+<!--    <td th:text="${pedido.usuario}"></td>-->
+<!--    <td th:text="${pedido.totalPedido}"></td>-->
+<!--    <td th:text="${pedido.valorFrete}"></td>-->
+<!--    <td th:text="${pedido.totalFinal}"></td>-->
+<!--    <td>-->
+<!--      <ul>-->
+<!--        <li th:each="item : ${pedido.itens}" th:text="${item.nomeProduto}"></li>-->
+<!--      </ul>-->
+<!--    </td>-->
+<!--  </tr>-->
+<!--  </tbody>-->
+<!--</table>-->
+<!--</body>-->
+<!--</html>-->
