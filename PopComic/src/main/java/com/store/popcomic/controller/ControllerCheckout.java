@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.text.DecimalFormat;
 import java.util.Map;
 
 
@@ -54,18 +56,22 @@ public class ControllerCheckout {
 
         double totalFinal = totalPedido + valorFrete;
 
-        /// Recupera a opção de pagamento da sessão
-        String opcaoPagamento = (String) session.getAttribute("opcaoPagamento");
+        // Formatar os valores com duas casas decimais
+        DecimalFormat df = new DecimalFormat("0.00");
+        String totalPedidoFormatado = df.format(totalPedido);
+        String valorFreteFormatado = df.format(valorFrete);
+        String totalFinalFormatado = df.format(totalFinal);
 
+        // Passar os valores formatados para o modelo
         ModelAndView modelAndView = new ModelAndView("resumo-pedido");
         modelAndView.addObject("carrinho", carrinho);
-        modelAndView.addObject("totalPedido", totalPedido);
-        modelAndView.addObject("valorFrete", valorFrete);
-        modelAndView.addObject("totalFinal", totalFinal);
-        modelAndView.addObject("opcaoPagamento", opcaoPagamento);  // Passando a opção de pagamento para o modelo
+        modelAndView.addObject("totalPedido", totalPedidoFormatado);
+        modelAndView.addObject("valorFrete", valorFreteFormatado);
+        modelAndView.addObject("totalFinal", totalFinalFormatado);
+        modelAndView.addObject("opcaoPagamento", session.getAttribute("opcaoPagamento"));
 
         return modelAndView;
-
     }
+
 
 }

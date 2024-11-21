@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import jakarta.servlet.http.HttpSession;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,11 +38,40 @@ public class CarrinhoController {
     @GetMapping("/carrinho")
     public ModelAndView chamarCarrinho(HttpSession session) {
         ModelAndView modelAndView = new ModelAndView("carrinho");
-        modelAndView.addObject("carrinho", getCarrinho(session)); // Obtém o carrinho da sessão
+        List<Compra> carrinho = getCarrinho(session);
+
+        // Calcular o total do pedido
+        double totalPedido = carrinho.stream()
+                .mapToDouble(compra -> compra.getPrecoProduto() * compra.getQuantidade())
+                .sum();
+
+        // Recuperar o tipo de frete da sessão
+        String tipoFrete = (String) session.getAttribute("tipoFrete");
+
+        // Calcular o valor do frete
+        double valorFrete = 0;
+        if (tipoFrete != null && opcoesFrete.containsKey(tipoFrete)) {
+            valorFrete = opcoesFrete.get(tipoFrete);
+        }
+
+        // Calcular o total final
+        double totalFinal = totalPedido + valorFrete;
+
+        // Formatar os valores com duas casas decimais
+        DecimalFormat df = new DecimalFormat("0.00");
+        String totalPedidoFormatado = df.format(totalPedido);
+        String valorFreteFormatado = df.format(valorFrete);
+        String totalFinalFormatado = df.format(totalFinal);
+
+        // Passar os valores formatados para o modelo
+        modelAndView.addObject("carrinho", carrinho);
+        modelAndView.addObject("totalPedido", totalPedidoFormatado);
+        modelAndView.addObject("valorFrete", valorFreteFormatado);
+        modelAndView.addObject("totalFinal", totalFinalFormatado);
         modelAndView.addObject("opcoesFrete", opcoesFrete);
+
         return modelAndView;
     }
-
     @PostMapping("/ecommerce/carrinho/{id}")
     public String adicionarCarrinho(@PathVariable Long id, String imagem, String nomeProduto, boolean status, Integer quantidade, double precoProduto, HttpSession session) {
         List<Compra> carrinho = getCarrinho(session);
@@ -59,6 +89,36 @@ public class CarrinhoController {
 
         Compra compra = new Compra(id, nomeProduto, precoProduto, imagem, status, quantidade);
         carrinho.add(compra);
+        return "redirect:/carrinho";
+    }
+
+    @PostMapping("/carrinho/aumentar/{id}")
+    public String aumentarQuantidade(@PathVariable Long id, HttpSession session) {
+        List<Compra> carrinho = getCarrinho(session);
+
+        for (Compra compra : carrinho) {
+            if (compra.getId().equals(id)) {
+                compra.setQuantidade(compra.getQuantidade() + 1);
+                break;
+            }
+        }
+        return "redirect:/carrinho";
+    }
+
+    @PostMapping("/carrinho/diminuir/{id}")
+    public String diminuirQuantidade(@PathVariable Long id, HttpSession session) {
+        List<Compra> carrinho = getCarrinho(session);
+
+        for (Compra compra : carrinho) {
+            if (compra.getId().equals(id)) {
+                if (compra.getQuantidade() > 1) {
+                    compra.setQuantidade(compra.getQuantidade() - 1);
+                } else {
+                    carrinho.remove(compra);
+                }
+                break;
+            }
+        }
         return "redirect:/carrinho";
     }
 
@@ -99,23 +159,34 @@ public class CarrinhoController {
         ModelAndView modelAndView = new ModelAndView("resumo-pedido");
         List<Compra> carrinho = getCarrinho(session);
 
+        // Calcular o total do pedido
         double totalPedido = carrinho.stream()
                 .mapToDouble(compra -> compra.getPrecoProduto() * compra.getQuantidade())
                 .sum();
 
+        // Recuperar o tipo de frete da sessão
         String tipoFrete = (String) session.getAttribute("tipoFrete");
 
+        // Calcular o valor do frete
         double valorFrete = 0;
         if (tipoFrete != null && opcoesFrete.containsKey(tipoFrete)) {
             valorFrete = opcoesFrete.get(tipoFrete);
         }
 
+        // Calcular o total final
         double totalFinal = totalPedido + valorFrete;
 
+        // Formatar os valores com duas casas decimais
+        DecimalFormat df = new DecimalFormat("0.00");
+        String totalPedidoFormatado = df.format(totalPedido);
+        String valorFreteFormatado = df.format(valorFrete);
+        String totalFinalFormatado = df.format(totalFinal);
+
+        // Passar os valores formatados para o modelo
         modelAndView.addObject("carrinho", carrinho);
-        modelAndView.addObject("totalPedido", totalPedido);
-        modelAndView.addObject("valorFrete", valorFrete);
-        modelAndView.addObject("totalFinal", totalFinal);
+        modelAndView.addObject("totalPedido", totalPedidoFormatado);
+        modelAndView.addObject("valorFrete", valorFreteFormatado);
+        modelAndView.addObject("totalFinal", totalFinalFormatado);
 
         return modelAndView;
     }

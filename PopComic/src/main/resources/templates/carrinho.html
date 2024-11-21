@@ -64,16 +64,19 @@
                         <td th:text="${compra.nomeProduto}">Nome do Produto</td>
                         <td th:text="${compra.StatusString}">Status</td>
                         <td>
-                            <form th:action="@{/carrinho/atualizar/{id}(id=${compra.id})}" method="post">
-                                <button type="button" class="btn btn-sm btn-success quantity-left-minus" data-id="${compra.id}">
+                            <form th:action="@{/carrinho/diminuir/{id}(id=${compra.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-success">
                                     <i class="fa fa-minus"></i>
                                 </button>
-                                <input type="number" name="quantidade" th:value="${compra.quantidade}" min="1" style="width: 50px;" readonly>
-                                <button type="button" class="btn btn-sm btn-success quantity-right-plus" data-id="${compra.id}">
+                            </form>
+                            <input type="number" name="quantidade" th:value="${compra.quantidade}" min="1" style="width: 50px;" readonly>
+                            <form th:action="@{/carrinho/aumentar/{id}(id=${compra.id})}" method="post" style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-success">
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </form>
                         </td>
+
                         <td th:text="${compra.precoProduto}">Preço do Produto</td>
                         <td class="text-center">
                             <form th:action="@{/carrinho/remover/{id}(id=${compra.id})}" method="post" style="display:inline;">
@@ -85,8 +88,11 @@
                 </table>
 
                 <div class="total-container text-right">
-                    <h5>Total: R$ <span id="valorTotal">0.00</span></h5>
+                    <h5>Total dos produtos: R$ <span id="valorTotal" th:text="${totalPedido}">0.00</span></h5>
+                    <h5>Frete: R$ <span id="valorFrete" th:text="${valorFrete}">0.00</span></h5>
+                    <h4>Total Final: R$ <span id="totalFinal" th:text="${totalFinal}">0.00</span></h4>
                 </div>
+
             </div>
         </div>
         <div class="col mb-2">
