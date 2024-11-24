@@ -8,17 +8,21 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ForeignKey;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id; // ID único para o pedido no banco
 
     @ManyToOne
-    @JoinColumn(name = "cpf_cliente", foreignKey = @ForeignKey(name = "FK_cliente"))
-    private Cliente cliente; // Cliente associado ao pedido (FK)
+    @JoinColumn(name = "pedido_cliente_id", foreignKey = @ForeignKey(name = "FK_pedido_cliente"))
+    private PedidoCliente pedidoCliente; // Relacionamento com PedidoCliente
 
     @Column(name = "nome_produto")
     private String nomeProduto;
@@ -44,29 +48,13 @@ public class Pedido {
     @Column(name = "opcao_pagamento")
     private String opcaoPagamento;
 
-    // Getters e setters
-
+    // Construtor sem argumentos
     public Pedido() {}
-
-    // Construtor para facilitar a criação de pedidos (opcional)
-    public Pedido(Cliente cliente, String nomeProduto, int quantidade, double precoUnitario, double subtotal,
-                  double totalPedido, double valorFrete, double totalFinal, String opcaoPagamento) {
-        this.cliente = cliente;
-        this.nomeProduto = nomeProduto;
-        this.quantidade = quantidade;
-        this.precoUnitario = precoUnitario;
-        this.subtotal = subtotal;
-        this.totalPedido = totalPedido;
-        this.valorFrete = valorFrete;
-        this.totalFinal = totalFinal;
-        this.opcaoPagamento = opcaoPagamento;
-    }
 
     @Override
     public String toString() {
         return "Pedido{" +
                 "id=" + id +
-                ", cliente=" + cliente.getCpf() +
                 ", nomeProduto='" + nomeProduto + '\'' +
                 ", quantidade=" + quantidade +
                 ", precoUnitario=" + precoUnitario +

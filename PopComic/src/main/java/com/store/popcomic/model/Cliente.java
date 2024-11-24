@@ -47,6 +47,7 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente")
     private List<Endereco> enderecos;
 
+
     public List<Endereco> getEnderecos() {
         return enderecos;
     }

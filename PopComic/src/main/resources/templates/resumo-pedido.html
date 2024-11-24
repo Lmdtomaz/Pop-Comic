@@ -30,7 +30,8 @@
 </nav>
 
 <div class="container mt-4">
-<h2>Resumo do Pedido</h2>
+  <h2 class="text-center">Resumo do Pedido</h2>
+
   <!-- Tabela de produtos no pedido -->
   <table class="table table-striped">
     <thead>
@@ -43,8 +44,8 @@
     </tr>
     </thead>
     <tbody>
-
     <tr th:each="compra : ${carrinho}">
+      <!--            <td><img th:src="@{${compra.imagemProduto}}" alt="Imagem do Produto" style="width: 50px; height: auto;"></td>-->
       <td th:text="${compra.nomeProduto}">Produto</td>
       <td th:text="${compra.quantidade}">Quantidade</td>
       <td th:text="${compra.precoProduto}">Preço Unitário</td>
@@ -81,12 +82,14 @@
     </div>
   </div>
 
+
   <!-- Botão de Finalizar Pedido -->
   <div class="row mt-4">
     <div class="col-12 text-center">
-      <form action="/finalizar-pedido" method="get">
+      <form action="/confirmar-pedido" method="post">
         <button type="submit" class="btn btn-lg btn-success">Finalizar Pedido</button>
       </form>
+
     </div>
   </div>
 </div>

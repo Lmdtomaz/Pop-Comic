@@ -8,13 +8,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/CarrinhoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/ControllerCheckout.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/HistoricoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/HistoricoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Compra.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Compra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Historico.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Historico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ProdutoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/ProdutoRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/Endereco.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/FinalizarController.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/controller/FinalizarController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Cliente.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Pedido.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/model/Pedido.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/PedidoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/java/com/store/popcomic/repository/PedidoRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/carrinho.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/pagamento.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/pagamento.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/perfil.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/perfil.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" beforeDir="false" afterPath="$PROJECT_DIR$/PopComic/src/main/resources/templates/resumo-pedido.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/test.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.mv.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/test.trace.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/test.trace.db" afterDir="false" />
@@ -27,9 +27,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="HTML File" />
         <option value="Class" />
         <option value="Interface" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>

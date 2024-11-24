@@ -63,45 +63,45 @@
 </div>
 
 <script>
-    $(document).ready(function () {
-        // Exibir os campos de pagamento conforme a seleção
-        $('#opcaoPagamento').on('change', function () {
-            var opcao = $(this).val();
-            $('.pagamento-opcao').hide(); // Oculta todos os campos inicialmente
-            if (opcao === 'Credito') {
-                $('#creditoCampos').show(); // Exibe os campos de crédito
-            } else if (opcao === 'Boleto') {
-                $('#boletoCampos').show(); // Exibe a mensagem do boleto
-            } else if (opcao === 'PIX') {
-                $('#pixCampos').show(); // Exibe a mensagem do PIX
-            }
-        });
+  $(document).ready(function () {
+      // Exibir os campos de pagamento conforme a seleção
+      $('#opcaoPagamento').on('change', function () {
+          var opcao = $(this).val();
+          $('.pagamento-opcao').hide(); // Oculta todos os campos inicialmente
+          if (opcao === 'Credito') {
+              $('#creditoCampos').show(); // Exibe os campos de crédito
+          } else if (opcao === 'Boleto') {
+              $('#boletoCampos').show(); // Exibe a mensagem do boleto
+          } else if (opcao === 'PIX') {
+              $('#pixCampos').show(); // Exibe a mensagem do PIX
+          }
+      });
 
-        // Garante que os campos corretos sejam exibidos ao carregar a página
-        $('#opcaoPagamento').trigger('change');
+      // Garante que os campos corretos sejam exibidos ao carregar a página
+      $('#opcaoPagamento').trigger('change');
 
-        // Validação no envio do formulário
-        $('#formPagamento').on('submit', function (event) {
-            var opcaoPagamento = $('#opcaoPagamento').val();
+      // Validação no envio do formulário
+      $('#formPagamento').on('submit', function (event) {
+          var opcaoPagamento = $('#opcaoPagamento').val();
 
-            if (opcaoPagamento === 'Credito') {
-                // Valida campos do cartão
-                var nome = $('#nome').val();
-                var numeroCartao = $('#numeroCartao').val();
-                var validade = $('#validade').val();
-                var codigoSeguranca = $('#codigoSeguranca').val();
+          if (opcaoPagamento === 'Credito') {
+              // Valida campos do cartão
+              var nome = $('#nome').val();
+              var numeroCartao = $('#numeroCartao').val();
+              var validade = $('#validade').val();
+              var codigoSeguranca = $('#codigoSeguranca').val();
 
-                if (!nome || !numeroCartao || !validade || !codigoSeguranca) {
-                    alert("Por favor, preencha todos os campos do cartão de crédito.");
-                    event.preventDefault();
-                    return false;
-                }
-            }
+              if (!nome || !numeroCartao || !validade || !codigoSeguranca) {
+                  alert("Por favor, preencha todos os campos do cartão de crédito.");
+                  event.preventDefault();
+                  return false;
+              }
+          }
 
-            // Para PIX ou Boleto, não há validação adicional
-            return true;
-        });
-    });
+          // Para PIX ou Boleto, não há validação adicional
+          return true;
+      });
+  });
 </script>
 
 </body>
