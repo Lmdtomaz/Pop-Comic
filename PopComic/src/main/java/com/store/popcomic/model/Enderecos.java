@@ -24,6 +24,9 @@ public class Enderecos {
     @JoinColumn(name = "cliente_cpf")
     private Cliente cliente;
 
+    public Object getCliente() {
+        return null;
+    }
 
 
 // 5 enderecos do cpf 123
