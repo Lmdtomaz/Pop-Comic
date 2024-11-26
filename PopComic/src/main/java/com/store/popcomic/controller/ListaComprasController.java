@@ -25,28 +25,56 @@ public class ListaComprasController {
 
     @GetMapping("/meus-pedidos")
     public ModelAndView listarPedidos(HttpSession session) {
-        // Verifica se o usuário está logado
         if (session.getAttribute("usuarioLogado") == null) {
-            return new ModelAndView("redirect:/login"); // Redireciona se o usuário não estiver logado
+            return new ModelAndView("redirect:/login");
         }
 
-        // Recupera o CPF do usuário logado da sessão
-        String cpf = (String) session.getAttribute("cpf");
+        String cpf = (String) session.getAttribute("userCpf");
+
+        if (cpf == null || cpf.isEmpty()) {
+            ModelAndView mv = new ModelAndView("erroGenerico");
+            mv.addObject("mensagemErro", "Não foi possível recuperar o CPF do usuário logado.");
+            return mv;
+        }
 
         // Busca os pedidos do cliente pelo CPF
         List<PedidoCliente> pedidoClientes = pedidoClienteRepository.findByCpf(cpf);
 
-        // Cria um ModelAndView para a página de lista de pedidos
+        for (PedidoCliente pedido : pedidoClientes){
+            System.out.println(pedidoClientes);
+        }
+
         ModelAndView modelAndView = new ModelAndView("listaPedidos");
 
-        if (pedidoClientes == null || pedidoClientes.isEmpty()) {
+        if (pedidoClientes.isEmpty()) {
             modelAndView.addObject("mensagemErro", "Você não possui pedidos cadastrados.");
         } else {
-            modelAndView.addObject("listaPedidos", pedidoClientes); // Envia todos os pedidos para a view
+            modelAndView.addObject("pedidos", pedidoClientes);
         }
 
         return modelAndView;
     }
+
+
+//    @GetMapping("/meus-pedidos")
+//    public ModelAndView listarPedidos(HttpSession session) {
+//        if (session.getAttribute("usuarioLogado") == null) {
+//            return new ModelAndView("redirect:/login");
+//        }
+//
+//        String cpf = (String) session.getAttribute("userCpf");
+//        List<PedidoCliente> pedidoClientes = pedidoClienteRepository.findByCpf(cpf);
+//
+//        ModelAndView modelAndView = new ModelAndView("listaPedidos");
+//        if (pedidoClientes == null || pedidoClientes.isEmpty()) {
+//            modelAndView.addObject("mensagemErro", "Você não possui pedidos cadastrados.");
+//        } else {
+//            modelAndView.addObject("pedidos", pedidoClientes);
+//        }
+//
+//        return modelAndView;
+//    }
+
 
     @GetMapping("/pedidos/{id}")
     public String exibirDetalhesPedido(@PathVariable Long id, Model model) {

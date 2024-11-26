@@ -21,7 +21,9 @@ public class PedidoCliente {
     @OneToMany(mappedBy = "pedidoCliente", cascade = CascadeType.ALL)
     private List<Pedido> pedidos; // Lista de pedidos associados a este PedidoCliente
 
-    private String status;
+    private String status = "Pendente";
+
+    private Double valorTotal;
 
 
     // Método adicional para adicionar pedidos à lista
@@ -38,6 +40,16 @@ public class PedidoCliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
+    }
+
+    @Override
+    public String toString() {
+        return "PedidoCliente{" +
+                "id=" + id +
+                ", cpf='" + cpf + '\'' +
+                ", pedidos=" + pedidos +
+                ", status='" + status + '\'' +
+                '}';
     }
 }
 

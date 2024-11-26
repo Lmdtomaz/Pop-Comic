@@ -132,6 +132,8 @@ public class ControllerCheckout {
         PedidoCliente pedidoCliente = new PedidoCliente();
         pedidoCliente.setCpf(cliente.getCpf());  // Adiciona o CPF no PedidoCliente
         pedidoCliente.setPedidos(new ArrayList<>());  // Cria uma lista de pedidos vazia
+        pedidoCliente.setValorTotal(totalFinal); // Atribui o total final ao PedidoCliente
+
 
         // Cria os pedidos a partir do carrinho
         for (Compra compra : carrinho) {

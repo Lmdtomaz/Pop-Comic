@@ -1,55 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <title>Meus Pedidos - Pop-Comic</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <link href="css/styles.css" rel="stylesheet" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Pedidos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<!-- Navigation-->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="/">Pop-Comic</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#!">All Products</a></li>
-                        <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                        <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex">
-                <div th:if="${session.user != null}">
-                    <img src="../static/imagens/user.png" alt="User" width="30" height="30" class="me-2" />
-                </div>
-                <div th:unless="${session.user != null}">
-                    <a class="btn btn-outline-dark me-2" href="/login" data-bs-toggle="modal">Login</a>
-                    <a class="btn btn-outline-dark" href="/ecommerce/cadastro">Criar Conta</a>
-                </div>
-            </form>
-            <form class="d-flex">
-                <a class="btn btn-outline-dark" href="/carrinho">
-                    <i class="bi-cart-fill me-1"></i>
-                    Carrinho
-                    <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                </a>
-            </form>
-        </div>
-    </div>
-</nav>
-
-<!-- Header-->
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -59,35 +16,42 @@
     </div>
 </header>
 
-<!-- Orders Section-->
 <section class="py-5">
     <div class="container px-4 px-lg-5">
-        <div class="row">
-            <div class="col-lg-12 mx-auto">
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Valor Total</th>
-                        <th>Forma de Pagamento</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="pedido : ${pedidos}">
-                        <td th:text="${pedido.id}">1</td>
-                        <td th:text="${pedido.valorTotal}">R$ 100,00</td>
-                        <td th:text="${pedido.formaPagamento}">Cartão de Crédito</td>
-                        <td><a class="btn btn-info" th:href="@{/meus-pedidos/{id}(id=${pedido.id})}">Ver Detalhes</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!-- Mensagem de erro caso não haja pedidos -->
+        <div th:if="${mensagemErro}" class="alert alert-warning text-center" th:text="${mensagemErro}"></div>
+
+        <!-- Tabela de pedidos -->
+        <table class="table table-striped" th:if="${pedidos}">
+            <thead>
+            <tr>
+                <th>ID do Pedido</th>
+                <th>Forma de Pagamento</th>
+                <th>Valor do Frete</th>
+                <th>Valor Total</th>
+                <th>Status</th>
+                <th>Detalhes</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Loop pelos pedidos -->
+            <tr th:each="pedidoCliente : ${pedidos}">
+                <td th:text="${pedidoCliente.id}"></td>
+                <td th:text="${pedidoCliente.pedidos != null && !pedidoCliente.pedidos.isEmpty() ? pedidoCliente.pedidos[0].opcaoPagamento : 'Não informado'}"></td>
+                <td th:text="${pedidoCliente.pedidos[0].valorFrete}"></td> <!-- Exibe o valor do frete -->
+                <td th:text="${pedidoCliente.valorTotal}"></td>
+                <td th:text="${pedidoCliente.status}"></td>
+
+                <td>
+                    <a th:href="@{'/detalhes-pedido/' + ${pedidoCliente.id}}" class="btn btn-primary">Ver Detalhes</a>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 
-<!-- Footer-->
 <footer class="py-5 bg-dark">
     <div class="container px-4 px-lg-5">
         <p class="m-0 text-center text-white">Pop-Comic © 2024. Todos os direitos reservados.</p>
