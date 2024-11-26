@@ -64,6 +64,7 @@ public class ClienteController {
             endereco.put("logradouro", (String) response.get("logradouro"));
             endereco.put("cidade", (String) response.get("localidade"));
             endereco.put("estado", (String) response.get("uf"));
+            endereco.put("bairro", (String) response.get("bairro"));
 
             return endereco;
         } catch (Exception e) {
