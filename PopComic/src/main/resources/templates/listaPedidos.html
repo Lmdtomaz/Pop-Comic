@@ -29,6 +29,9 @@
                 <th>Forma de Pagamento</th>
                 <th>Valor do Frete</th>
                 <th>Valor Total</th>
+                <th>Endereco</th>
+                <th>Numero</th>
+                <th>Data do Pedido</th>
                 <th>Status</th>
                 <th>Detalhes</th>
             </tr>
@@ -40,6 +43,9 @@
                 <td th:text="${pedidoCliente.pedidos != null && !pedidoCliente.pedidos.isEmpty() ? pedidoCliente.pedidos[0].opcaoPagamento : 'Não informado'}"></td>
                 <td th:text="${pedidoCliente.pedidos[0].valorFrete}"></td> <!-- Exibe o valor do frete -->
                 <td th:text="${pedidoCliente.valorTotal}"></td>
+                <td th:text="${pedidoCliente.endereco}"></td>
+                <td th:text="${pedidoCliente.numeroResidencia}"></td>
+                <td th:text="${pedidoCliente.data}"></td>
                 <td th:text="${pedidoCliente.status}"></td>
 
                 <td>

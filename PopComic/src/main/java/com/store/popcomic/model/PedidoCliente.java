@@ -5,7 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.time.LocalDate;
+
+
 
 @Entity
 @Setter
@@ -24,6 +28,12 @@ public class PedidoCliente {
     private String status = "Pendente";
 
     private Double valorTotal;
+
+    private String endereco;
+
+    private String numeroResidencia;
+
+    private LocalDate data;
 
 
     // Método adicional para adicionar pedidos à lista

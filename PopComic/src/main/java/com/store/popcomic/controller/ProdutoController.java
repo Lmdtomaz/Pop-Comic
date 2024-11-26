@@ -20,7 +20,9 @@ import java.util.Optional;
 @RequestMapping("ecommerce")
 public class ProdutoController {
 
-    private static String caminhoImagens = "C:\\Users\\Operações\\Downloads\\imagens\\";
+    private static String caminhoImagens = "/Users/leandro/Downloads/PopComicImages/";
+
+
 
     @Autowired
     private ProdutoRepository produtoRepository;
@@ -32,7 +34,7 @@ public class ProdutoController {
         return mv;
     }
 
-        @GetMapping("adm/produto/listar")
+    @GetMapping("adm/produto/listar")
     public ModelAndView listar(){
         ModelAndView mv = new ModelAndView("adm/produtos/lista");
         mv.addObject("produto", produtoRepository.findAll());
@@ -55,14 +57,27 @@ public class ProdutoController {
     @GetMapping("adm/produto/alterarStatus/{id}")
     public ModelAndView remover(@PathVariable("id") Long id){
         Optional<Produto> produtoOpt = produtoRepository.findById(id);
-            if(produtoOpt.isPresent()) {
-                Produto produto = produtoOpt.get();
+        if(produtoOpt.isPresent()) {
+            Produto produto = produtoOpt.get();
 
-                produto.setStatus(!produto.isStatus());
+            produto.setStatus(!produto.isStatus());
 
-                produtoRepository.save(produto);
-            }
+            produtoRepository.save(produto);
+        }
         return new ModelAndView("redirect:/adm/produto/listar");
+    }
+
+
+
+    @GetMapping("produto/{id}")
+    public ModelAndView visualizarProduto(@PathVariable("id") Long id) {
+        Optional<Produto> produtoOpt = produtoRepository.findById(id);
+        if (produtoOpt.isPresent()) {
+            ModelAndView mv = new ModelAndView("produto/detalhes");
+            mv.addObject("produto", produtoOpt.get());
+            return mv;
+        }
+        return new ModelAndView("redirect:/produtodetalhes");
     }
 
 
@@ -80,20 +95,6 @@ public class ProdutoController {
         }
     }
 
-    @GetMapping("produto/{id}")
-    public ModelAndView visualizarProduto(@PathVariable("id") Long id) {
-        Optional<Produto> produtoOpt = produtoRepository.findById(id);
-        if (produtoOpt.isPresent()) {
-            ModelAndView mv = new ModelAndView("produto/detalhes");
-            mv.addObject("produto", produtoOpt.get());
-            return mv;
-        }
-        return new ModelAndView("redirect:/produtodetalhes");
-    }
-
-
-
-
 
     @PostMapping("adm/produto/salvarImagem")
     public ModelAndView salvarImagem(@RequestParam("file") MultipartFile arquivo, @RequestParam("id") Long id) {
@@ -104,32 +105,34 @@ public class ProdutoController {
 
             try {
                 if (!arquivo.isEmpty()) {
-                    byte[] bytes = arquivo.getBytes();
-                            Path caminho = Paths.get(caminhoImagens + String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
-                    Files.write(caminho, bytes);
+                    // Criar o diretório se não existir
+                    Path diretorio = Paths.get(caminhoImagens);
+                    if (!Files.exists(diretorio)) {
+                        Files.createDirectories(diretorio);
+                    }
 
-                    produto.setImagenPrincipal(String.valueOf(produto.getId()) + arquivo.getOriginalFilename());
+                    // Gerar o nome da imagem e salvar
+                    String nomeImagem = produto.getId() + "_" + arquivo.getOriginalFilename();
+                    Path caminho = Paths.get(caminhoImagens + nomeImagem);
+                    Files.write(caminho, arquivo.getBytes());
+
+                    // Atualizar o banco de dados
+                    produto.setImagenPrincipal(nomeImagem);
                     produtoRepository.saveAndFlush(produto);
+
+                    System.out.println("Imagem salva com sucesso: " + nomeImagem);
+                    System.out.println("Salvando imagem em: " + caminho.toAbsolutePath());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            // Redireciona para a lista de produtos após o upload
             return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
         } else {
-            // Redireciona caso o produto não exista
             return new ModelAndView("redirect:/ecommerce/adm/produto/listar");
         }
     }
 
-
-    @GetMapping("/imagem/{nomeImagem}")
-    @ResponseBody
-    public byte[] mostrarImagem(@PathVariable("nomeImagem") String nomeImagem) throws IOException {
-        Path caminho = Paths.get(caminhoImagens, nomeImagem);
-        return Files.readAllBytes(caminho);
-    }
 
 
 

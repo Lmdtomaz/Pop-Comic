@@ -1,9 +1,6 @@
 package com.store.popcomic.controller;
 
-import com.store.popcomic.model.Compra;
-import com.store.popcomic.model.Pedido;
-import com.store.popcomic.model.Cliente;
-import com.store.popcomic.model.PedidoCliente;
+import com.store.popcomic.model.*;
 import com.store.popcomic.repository.PedidoClienteRepository;
 import com.store.popcomic.repository.PedidoRepository;
 import jakarta.servlet.http.HttpSession;
@@ -15,11 +12,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.Date;
+
 
 @Controller
 public class ControllerCheckout {
@@ -66,6 +64,7 @@ public class ControllerCheckout {
 
         // Calcula o valor do frete
         double valorFrete = 0;
+
         if (tipoFrete != null && opcoesFrete.containsKey(tipoFrete)) {
             valorFrete = opcoesFrete.get(tipoFrete);
         }
@@ -78,6 +77,11 @@ public class ControllerCheckout {
         String valorFreteFormatado = df.format(valorFrete);
         String totalFinalFormatado = df.format(totalFinal);
 
+        Endereco endereco = (Endereco) session.getAttribute("enderecoEntrega");
+
+        System.out.println(endereco);
+
+
         // Passar os valores formatados para o modelo
         ModelAndView modelAndView = new ModelAndView("resumo-pedido");
         modelAndView.addObject("carrinho", carrinho);
@@ -85,6 +89,7 @@ public class ControllerCheckout {
         modelAndView.addObject("valorFrete", valorFreteFormatado);
         modelAndView.addObject("totalFinal", totalFinalFormatado);
         modelAndView.addObject("opcaoPagamento", session.getAttribute("opcaoPagamento"));
+        modelAndView.addObject("endereco", endereco);
 
         return modelAndView;
     }
@@ -125,15 +130,33 @@ public class ControllerCheckout {
 
         double totalFinal = totalPedido + valorFrete;
 
+
+
         // Recupera o cliente da sessão
         Cliente cliente = (Cliente) session.getAttribute("usuarioLogado");
+
+        Endereco endereco = (Endereco) session.getAttribute("enderecoEntrega");
+
+        System.out.println(endereco);
+
+
+        String rua = endereco.getLogradouro();
+        String numero = (String) endereco.getNumero();
+
+        Date data = new Date();
+
+        LocalDate localDate = LocalDate.now();  // Obtém a data atual (sem hora)
+
+
 
         // Cria um novo PedidoCliente sem buscar pelo CPF
         PedidoCliente pedidoCliente = new PedidoCliente();
         pedidoCliente.setCpf(cliente.getCpf());  // Adiciona o CPF no PedidoCliente
-        pedidoCliente.setPedidos(new ArrayList<>());  // Cria uma lista de pedidos vazia
         pedidoCliente.setValorTotal(totalFinal); // Atribui o total final ao PedidoCliente
-
+        pedidoCliente.setPedidos(new ArrayList<>());  // Cria uma lista de pedidos vazia
+        pedidoCliente.setEndereco(rua);
+        pedidoCliente.setNumeroResidencia(numero);
+        pedidoCliente.setData(localDate);
 
         // Cria os pedidos a partir do carrinho
         for (Compra compra : carrinho) {

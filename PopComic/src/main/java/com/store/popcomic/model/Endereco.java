@@ -1,15 +1,14 @@
 package com.store.popcomic.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Endereco {
 
     @Id
@@ -27,6 +26,7 @@ public class Endereco {
     @ManyToOne
     @JoinColumn(name = "cliente_cpf", referencedColumnName = "cpf", nullable = false)  // Definindo a chave estrangeira para o CPF do Cliente
     private Cliente cliente;
+
 
 
 
