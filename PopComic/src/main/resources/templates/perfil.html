@@ -35,8 +35,6 @@
           <img src="../static/imagens/user.png" alt="User" width="30" height="30" class="me-2" />
         </div>
         <div th:unless="${session.user != null}">
-          <a class="btn btn-outline-dark me-2" href="/login" data-bs-toggle="modal">Login</a>
-          <a class="btn btn-outline-dark" href="/ecommerce/cadastro">Criar Conta</a>
         </div>
       </form>
       <form class="d-flex">
@@ -87,9 +85,8 @@
     </div>
   </div>
 </section>
-
-<!-- Footer-->
-<footer class="py-5 bg-dark">
+<!-- Footer -->
+<footer class="py-5 bg-dark fixed-bottom">
   <div class="container px-4 px-lg-5">
     <p class="m-0 text-center text-white">Pop-Comic © 2024. Todos os direitos reservados.</p>
   </div>

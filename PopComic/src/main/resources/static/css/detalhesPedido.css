@@ -1,0 +1,118 @@
+/* Estilo geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+h2.text-center {
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.table {
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    color: #333;
+    font-weight: bold;
+}
+
+.table-striped tbody tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.text-right {
+    text-align: right;
+}
+
+h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+p {
+    margin: 10px 0;
+    color: #555;
+}
+
+strong {
+    color: #333;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+}
+
+body, h2, p, th, td {
+    color: #000 !important;
+}
+
+
+.custom-cart-button {
+    color: #fff; /* Cor do texto do botão */
+    background-color: #28a745; /* Cor de fundo */
+    border-color: #28a745; /* Cor da borda */
+}
+
+.custom-cart-button:hover {
+    color: #fff;
+    background-color: #218838; /* Cor de fundo no hover */
+    border-color: #1e7e34; /* Cor da borda no hover */
+}
+
+.custom-cart-button .bi-cart-fill {
+    color: #fff; /* Cor do ícone */
+}
+
+
+html, body {
+    height: 100%; /* Garante que o corpo da página ocupe toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1; /* Faz com que o conteúdo principal ocupe todo o espaço disponível */
+}
+
+footer {
+    margin-top: auto; /* Garante que o footer fique na parte inferior */
+}

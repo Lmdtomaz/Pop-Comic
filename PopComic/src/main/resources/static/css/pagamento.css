@@ -108,3 +108,18 @@ input[type="month"] {
         width: auto;
     }
 }
+
+html, body {
+    height: 100%; /* Garante que o corpo da página ocupe toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1; /* Faz com que o conteúdo principal ocupe todo o espaço disponível */
+}
+
+footer {
+    margin-top: auto; /* Garante que o footer fique na parte inferior */
+}

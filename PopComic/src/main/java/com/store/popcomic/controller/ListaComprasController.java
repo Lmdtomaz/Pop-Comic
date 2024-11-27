@@ -32,7 +32,7 @@ public class ListaComprasController {
         String cpf = (String) session.getAttribute("userCpf");
 
         if (cpf == null || cpf.isEmpty()) {
-            ModelAndView mv = new ModelAndView("erroGenerico");
+            ModelAndView mv = new ModelAndView("login");
             mv.addObject("mensagemErro", "Não foi possível recuperar o CPF do usuário logado.");
             return mv;
         }
@@ -56,37 +56,40 @@ public class ListaComprasController {
     }
 
 
-//    @GetMapping("/meus-pedidos")
-//    public ModelAndView listarPedidos(HttpSession session) {
-//        if (session.getAttribute("usuarioLogado") == null) {
-//            return new ModelAndView("redirect:/login");
-//        }
+
+
+//    @GetMapping("/pedidos/{id}")
+//    public String exibirDetalhesPedido(@PathVariable Long id, Model model) {
+//        // Busca o pedido pelo ID
+//        Pedido pedido = pedidoRepository.findById(id).orElse(null);
 //
-//        String cpf = (String) session.getAttribute("userCpf");
-//        List<PedidoCliente> pedidoClientes = pedidoClienteRepository.findByCpf(cpf);
-//
-//        ModelAndView modelAndView = new ModelAndView("listaPedidos");
-//        if (pedidoClientes == null || pedidoClientes.isEmpty()) {
-//            modelAndView.addObject("mensagemErro", "Você não possui pedidos cadastrados.");
+//        if (pedido != null) {
+//            model.addAttribute("pedido", pedido);
+//            return "detalhesPedido"; // Página de detalhes do pedido
 //        } else {
-//            modelAndView.addObject("pedidos", pedidoClientes);
+//            model.addAttribute("erro", "Pedido não encontrado.");
+//            return "redirect:/meus-pedidos"; // Redireciona para a lista de pedidos caso não encontre o pedido
 //        }
-//
-//        return modelAndView;
 //    }
 
+    @GetMapping("/detalhes-pedido/{id}")
+    public String exibirDetalhesPedido(@PathVariable Long id, Model model, HttpSession session) {
+        // Verifica se o usuário está logado
+        if (session.getAttribute("usuarioLogado") == null) {
+            return "redirect:/login";
+        }
 
-    @GetMapping("/pedidos/{id}")
-    public String exibirDetalhesPedido(@PathVariable Long id, Model model) {
-        // Busca o pedido pelo ID
-        Pedido pedido = pedidoRepository.findById(id).orElse(null);
+        // Busca o PedidoCliente pelo ID
+        PedidoCliente pedidoCliente = pedidoClienteRepository.findById(id).orElse(null);
 
-        if (pedido != null) {
-            model.addAttribute("pedido", pedido);
-            return "detalhesPedido"; // Página de detalhes do pedido
+        if (pedidoCliente != null) {
+            // Adiciona os dados do PedidoCliente ao modelo
+            model.addAttribute("pedidoCliente", pedidoCliente);
+            model.addAttribute("pedidos", pedidoCliente.getPedidos());
+            return "detalhesPedido";
         } else {
-            model.addAttribute("erro", "Pedido não encontrado.");
-            return "redirect:/meus-pedidos"; // Redireciona para a lista de pedidos caso não encontre o pedido
+            model.addAttribute("mensagemErro", "Pedido não encontrado.");
+            return "redirect:/meus-pedidos"; // Redireciona para a lista de pedidos se não encontrar
         }
     }
 }
